@@ -1,0 +1,348 @@
+.box-items{
+    position: relative;
+    .action{
+        width: 100%;
+        height: 10%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1%;
+        .search{
+            width: 80%;
+            height: 100%;
+            display: flex;
+            justify-content:start;
+            align-items: center;
+            gap: 30px;
+            .icon{
+                width: 45px;
+                height: 45px;
+                border-radius: 50%;
+                background-color: var(--primary-color);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font: 1em sans-serif;
+                color: var( --main-white);
+            }
+            .date{
+                width: 20% ;
+                height: 100%;
+               display: flex;
+               justify-content: center;
+               align-items: center;
+               input{
+                width: 100%;
+                height: 100%;
+                padding: 0;
+                border: none;
+                &:active{
+                    outline: none;
+                    border: none;
+                    
+                }
+
+            }
+
+            }
+            .value{
+                width: 80% ;
+                height: 100%;
+                padding: 0 10px;
+
+                input{
+                    width: 100%;
+                    height: 100%;
+                    padding: 0;
+                    border: none;
+                    &:active{
+                        outline: none;
+                        border: none;
+                        
+                    }
+
+                }
+            }
+
+
+        }
+        .add-cate{
+            width: 20%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            button{
+                padding: 16px 20px;
+                border: none;
+                background-color:var( --nav-background);
+                color: var(--light-gray);
+                border-radius: 15px;
+                cursor: pointer;
+                transform: scale(0.97);
+                &:hover{
+                    transform: scale(1);
+                    background-color: var(--primary-color);
+                }
+                &:active{
+                    transform: scale(0.97);
+                }
+            }
+        }
+
+    }
+    .form-add-cat,.form-edit-cat{
+        width:70%;
+        height: 33%;
+        position: absolute;
+        /* top: 50%;
+        left: 10%; */
+        transform: translate(22%, -25%);
+        box-shadow:  0px 4px 8px rgba(0, 0, 0, 0.26);
+        border-radius: 15px;
+        padding: 1%;
+        background-color: var(--medium-gray);
+        visibility: hidden;
+        opacity: 0;
+        z-index: -1;
+        &.active{
+            visibility: visible;
+            opacity: 1;
+            z-index: 20;
+            
+        }
+        form{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-direction: column;
+            .input{
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 15px;
+                .icon{
+                    width: 45px;
+                    height: 45px;
+                    border-radius: 50%;
+                    background-color: var(--primary-color);
+                    font-size: 25px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                }
+                .value{
+                    width: calc(100% - 15px );
+                    height:calc(100% - 30px );
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    input{
+                        width: 100%;
+                        height: 100%;
+                        border: none;
+                        background-color: white;
+                        padding-left: 5px;
+                   &:focus{
+                    border: none;
+                   }
+                    }
+                }
+            }
+            .button{
+                width:calc( 30% - 1%);
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 15px;
+                button{
+                    padding: 15px 20px;
+                    border: none;
+                    background-color:var( --nav-background);
+                    color: var(--light-gray);
+                    border-radius: 15px;
+                    cursor: pointer;
+                    transform: scale(0.97);
+                    &:hover{
+                        transform: scale(1.03);
+                        background-color: var(--primary-color);
+                        color: var(--text-light);
+                    }
+                    &:active{
+                        transform: scale(0.97);
+                    }
+
+                }
+            }
+
+        }
+      
+    }
+    /* .form-edit-cat{
+        width:70%;
+        height: 60px;
+        position: absolute;
+        transform: translateY(-50%);
+        box-shadow:  0px 4px 8px rgba(0, 0, 0, 0.26);
+        border-radius: 15px;
+        padding: 1%;
+        background-color: var(--main-white);
+        visibility: hidden;
+        opacity: 0;
+        z-index: -1;
+        &.active{
+            visibility: visible;
+            opacity: 1;
+            z-index: 1;
+            
+        }
+        form{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-direction: row;
+            .input{
+                width: 60%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 15px;
+                .icon{
+                    width: 45px;
+                    height: 45px;
+                    border-radius: 50%;
+                    background-color: var(--primary-color);
+                    font-size: 25px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                }
+                .value{
+                    width: calc(100% - 15px );
+                    height: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    input{
+                        width: 100%;
+                        height: 80%;
+                        border: none;
+                  
+                    }
+                }
+            }
+            .button{
+                width:calc( 30% - 1%);
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 15px;
+                button{
+                    padding: 15px 20px;
+                    border: none;
+                    background-color:var( --nav-background);
+                    color: var(--light-gray);
+                    border-radius: 15px;
+                    cursor: pointer;
+                    transform: scale(0.97);
+                    &:hover{
+                        transform: scale(1);
+                        background-color: var(--primary-color);
+                    }
+                    &:active{
+                        transform: scale(0.97);
+                    }
+
+                }
+            }
+
+        }
+      
+    } */
+    .table{
+       
+        width: 100%;
+        height: 88%;
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        flex-direction: column;
+        .header{
+            width: 100%;
+            height: 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--primary-color);
+            padding: 1%;
+            color: var(--main-white);
+            .name,.edit,.delete{
+                width: 30%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+        }
+        .body{
+            width: 100%;
+            height: 85%;
+            background-color: var(--main-white);
+            overflow-y:scroll ;
+            .row{
+                width: 100%;
+                height: auto;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                transform: scale(0.95);
+                  &:hover{
+                        background-color: var(--main-blue);
+                        transform: scale(1);
+                        border-radius: 5px;
+                    }
+                 div{
+                    width: 30%;
+                    height: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 15px;
+                   
+                        button{
+                            padding: 15px 20px;
+                            border: none;
+                            background-color:var( --nav-background);
+                            color: var(--light-gray);
+                            border-radius: 15px;
+                            cursor: pointer;
+                            transform: scale(0.97);
+                            &:hover{
+                                transform: scale(1.03);
+                                background-color: var(--primary-color);
+                                color: var(--text-light);
+                            }
+                            &:active{
+                                transform: scale(0.97);
+                            }
+                        
+                    }
+                }
+            }
+
+        }
+    }
+
+}
