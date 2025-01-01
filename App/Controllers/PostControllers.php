@@ -46,6 +46,10 @@ class PostControllers
      {
       return viewpost('Brands');
      }
+     public function Accounts()
+     {
+      return viewpost('Account');
+     }
 
 
 }

@@ -15,6 +15,7 @@ Route::get("/customers",[HomeController::class,'customers']);
 Route::get("/expenses",[HomeController::class,'expenses']);
 Route::get("/dashboard",[HomeController::class,'dashboard']);
 Route::get("/brands",[HomeController::class,'brands']);
+Route::get("/Accounts",[HomeController::class,'Accounts']);
 
 
 
@@ -31,3 +32,4 @@ Route::post('/Add/Orders',[PostControllers::class,'Orders']);
 Route::post('/App/expenses',[PostControllers::class,'expenses']);
 Route::post('/App/handlers',[PostControllers::class,'handlers']);
 Route::post('/App/brand',[PostControllers::class,'brand']);
+Route::post('/App/Accounts',[PostControllers::class,'Accounts']);

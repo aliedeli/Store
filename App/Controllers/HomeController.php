@@ -54,5 +54,9 @@ class HomeController
     {
       return view('brands');
     }
+    public function Accounts()
+    {
+      return view('Accounts');
+    }
     
 }

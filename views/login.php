@@ -1,3 +1,12 @@
+<?php
+
+session_start();
+
+if (isset($_SESSION['UserName'])) {
+    header("Location: \home");
+    exit();
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
