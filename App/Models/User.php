@@ -35,6 +35,7 @@ Class User
     public $Deletes;
     public $Power;
     public $search;
+    public $Status;
     
 
 
@@ -66,6 +67,9 @@ Class User
         $this->Updates=filter_input(INPUT_POST,'updates',FILTER_SANITIZE_SPECIAL_CHARS) ?? null;
         $this->Deletes=filter_input(INPUT_POST,'deletes',FILTER_SANITIZE_SPECIAL_CHARS) ?? null;
         $this->activeUser=filter_input(INPUT_POST,'active',FILTER_SANITIZE_SPECIAL_CHARS) ?? null;
+        $this->Status=filter_input(INPUT_POST,'status',FILTER_SANITIZE_SPECIAL_CHARS) ?? null;
+
+       
         $this->Role($this->db);
         $this->RoleUser($this->db);
     }
@@ -206,6 +210,21 @@ Class User
          }
 
     }
+    public function  UpdateStatus()  {
+        
+        $sql=$this->db->prepare("UPDATE T_User SET Status=:Status where UserID=:UserID");
+        $sql->bindValue(':Status', $this->Status );
+        $sql->bindValue(':UserID',  $this->UesrID );
+        $results= $sql->execute();
+        if($results)
+        {
+            json_data(["status"=>true]);
+        }
+        else
+        {
+            json_data(["status"=>false]);
+        }
+    }
     public function CreateScreen()
     {
 
@@ -319,6 +338,11 @@ Class User
             {
                 $this->ScreenAll();
 
+            }
+            elseif($this->tpye_M == 'Status')
+            {
+              
+                 $this->UpdateStatus();
             }
         }
     }

@@ -141,6 +141,34 @@ session();
                         <input type="text"  id="QuantityAvailable">
                     </div>
                 </div>
+                <div class="input int">
+                    <div class="icon">
+                    <i class="fa-thin fa-tags"></i>
+                    </div>
+                    <div class="text">
+                    Talo Orders: 
+                    </div>
+                    <div class="vlaue samp ">
+                        <samp id="Talo_Orders"></samp>
+                    </div>
+                </div>
+                <div class="input select">
+                    <div class="icon">
+                    <i class="fa-duotone fa-solid fa-arrow-up-9-1"></i>
+                    </div>
+                    <div class="text">
+                    typePush
+                    </div>
+                    <div class="vlaue">
+                        <select name="typepush" id="typepush">
+                            <option value="1">كاش</option>
+                            <option value="2">قسط</option>
+
+
+
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class="button">
                 <button type="button" id='Addorder'>
@@ -151,7 +179,7 @@ session();
                 submit
                 </button>
             </div>
-            <div class="table">
+            <div class="table-Order">
                     <div class="header">
                         <div class="name">
                             Name
@@ -163,14 +191,14 @@ session();
                         price
                         </div>
                         <div class="delete">
-                            Edit
+                        total
                         </div>
                         <div class="delete">
                             Delete
                         </div>
                         
                     </div>
-                    <div class="body" id="body-order">
+                    <div class="bodyOrder" id="body-order">
                         <div class="row">
                             <div class="name">
                                 items

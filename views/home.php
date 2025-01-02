@@ -7,6 +7,7 @@ session();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/_min.css">
+
     <link rel="stylesheet" href="../css/all.min.css">
   
 </head>
@@ -63,7 +64,7 @@ session();
             </div>
             <div class="stat-info">
             <h3>Total Accounts</h3>
-                <div class="count" id="tableCount">0</div>
+                <div class="count" id="totalAccounts">0</div>
             </div>
 
             </div>
@@ -73,7 +74,7 @@ session();
             </div>
             <div class="stat-info">
                 <h3>Total Tables</h3>
-                <div class="count" id="tableCount">0</div>
+                <div class="count" id="totalOrders">0</div>
             </div>
 
             </div>
@@ -82,8 +83,8 @@ session();
                 <i class="fas fa-table"></i>
             </div>
             <div class="stat-info">
-                <h3>Total Tables</h3>
-                <div class="count" id="tableCount">0</div>
+                <h3>total Expenses</h3>
+                <div class="count" id="totalExpenses">0</div>
             </div>
 
             </div>
@@ -97,8 +98,9 @@ session();
     </div>
     <?php include_once base_path() . '/views/layouts/footer.php';?>
 
-    <script src="js/all.min.js"></script>
+    <script src="js/all.min.js"></script>   
     <script src="js/admin/_min.js"></script>   
+    <script src="js/home.js"></script>
     
 </body>
 </html>

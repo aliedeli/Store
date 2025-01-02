@@ -836,6 +836,11 @@ header{
                 
                 .input{
                     width: 100%;
+                   
+                    .text{
+                        width: 35%;
+                        height: 100%;
+                    }
 
                     &.int-1{
                         width: 50%;
@@ -856,6 +861,19 @@ header{
                             }
                         }
 
+                    }
+                    &.select{
+                        width: 30%;
+                        height: 100%;
+                        .vlaue{
+                            width: 50%;
+                            height: 100%;
+                            select{
+                                width: 100%;
+                                height: 100%;
+                                border: none;
+                            }
+                        }
                     }
 
                     .vlaue{
@@ -1417,7 +1435,8 @@ header{
         }
         
         }
-        .table{
+        .table,
+        .table-Order{
             width: 100%;
             height: 100%;
             display: flex;
@@ -1547,20 +1566,22 @@ header{
                     align-items: center;
                 }
             }
-            .body{
+            .body,
+            .bodyOrder{
                 width: 100%;
-                height: 85%;
+                height: 90%;
                 padding: 0 30px;
                 background-color: var(--main-white);
                 overflow-y:scroll ;
                 position: relative;
-           
+                gap: 10px;
                 .row{
                     width: 100%;
-                    height: 33%;
+                    height:10%;
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
+                    
                       &:hover{
                             background-color: var(--main-gray);
                             transform: scale(1);
@@ -1575,7 +1596,10 @@ header{
                         font-size: 15px;
                        
                             button{
-                                padding: 15px 20px;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                padding: 10px;
                                 border: none;
                                 background-color:var( --nav-color);
                                 color: var(--main-white);

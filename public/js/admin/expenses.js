@@ -154,7 +154,7 @@ function GetExpenses(){
             xhr.onload=()=>{
                 if(xhr.status==200 && xhr.readyState == 4){
                     
-                  console.log(xhr.responseText)
+                  console.log(xhr.response)
                     r(JSON.parse(xhr.response))
                 }else{
                     j("Error")

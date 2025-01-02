@@ -33,3 +33,4 @@ Route::post('/App/expenses',[PostControllers::class,'expenses']);
 Route::post('/App/handlers',[PostControllers::class,'handlers']);
 Route::post('/App/brand',[PostControllers::class,'brand']);
 Route::post('/App/Accounts',[PostControllers::class,'Accounts']);
+Route::post('/App/AotuTatol',[PostControllers::class,'AotuTatol']);

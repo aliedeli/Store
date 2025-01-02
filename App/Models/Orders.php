@@ -16,6 +16,8 @@ class Orders
     public $search;
     public $Quantity;
     public $DalID;
+    public $TypePush;
+    public $total;
     public $Arr=[];
     public $amount;
     public function __construct($conn)
@@ -30,6 +32,8 @@ class Orders
         $this->Quantity=$_POST['Quantity'] ?? null;
         $this->DalID=$_POST['DalID'] ?? null;
         $this->FullName=$_POST['FullName'] ?? null;
+        $this->TypePush=$_POST['TypePush'] ?? null;
+        $this->total=$_POST['total'] ?? null;
         $this->amount=0;
         $this->Accounts($this->db);
        
@@ -38,9 +42,10 @@ class Orders
     {
         $this->items=  json_decode( $this->items) ?? [] ;
         
-        $OderAdd=$this->db->prepare("INSERT  INTO  Orders (OrdID,CutID,total) VALUES (:OrdID,:CutID,:total) ");
+        $OderAdd=$this->db->prepare("INSERT  INTO  Orders (OrdID,CutID,transaction_type,total) VALUES (:OrdID,:CutID,:type,:total) ");
         $OderAdd->bindValue(':OrdID',(int) $this->OrderID );
         $OderAdd->bindValue(':CutID',(int) $this->CutID );
+        $OderAdd->bindValue(':type',(int) $this->TypePush );
         $OderAdd->bindValue(':total',(int) $this->amount);
         $Add=$OderAdd->execute();
         if($Add)
@@ -59,7 +64,7 @@ class Orders
     }
     public function Orderitem($data)
     {
-        print_r($data->name);
+       
         $Orderitem=$this->db->prepare("INSERT INTO OederIems (DalID,name,OdrID,itemID,Price,Discount,Quantity,total)   VALUES (:DalID,:name,:OdrID,:itemID,:Price,:Discount,:Quantity,:total) ");
         $Orderitem->bindValue(':DalID',(int) $data->DalID);
         $Orderitem->bindValue(':name',  $data->name );

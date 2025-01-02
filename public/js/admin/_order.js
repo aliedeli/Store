@@ -14,6 +14,8 @@ const talo=document.getElementById('talo')
 const  QuantityAvailable=document.getElementById('QuantityAvailable')
 const Addorder=document.getElementById('Addorder')
 const submit=document.getElementById('submit')
+const Talo_Orders=document.getElementById('Talo_Orders')
+const Select =document.getElementById('typepush')
 const ulrCustomers="/Add/Customers"
 const ulrItems='/App/items'
 const ulrOrder='/Add/Orders'
@@ -21,11 +23,12 @@ AutoID.checked=true;
 OrderID.value=uintID();
 let ArrItems=[]
  bodyOrder.innerHTML=''
-
+ let orderTalo=0;
 let oders ={
     'OrderID':OrderID.value ,
     "CutID":null,
-    "items":[]
+    "items":[],
+    "total":0
     
 }
 localStorage.clear()
@@ -38,12 +41,13 @@ AutoID.addEventListener('change',e=>{
     {
         OrderID.setAttribute('disabled',true)
         OrderID.value=uintID();
-        oders.OrderID=OrderID.value;
+       
     }else{
 
         OrderID.value='';
         OrderID.removeAttribute('disabled')
     }
+    oders.OrderID=OrderID.value;
 
 })
 
@@ -362,24 +366,38 @@ class Items{
 
 }
 
+
 function getOrders(){
     ArrItems=JSON.parse(localStorage.getItem('data'))  ? JSON.parse(localStorage.getItem('data')) : []; 
     bodyOrder.innerHTML=''
-    ArrItems.forEach(row=>{
-            let Addorder=new Oders(row)
+    ArrItems.forEach((row,index)=>{
+            let Addorder=new Oders(row,index)
                 Addorder.CreateOrder()
-
+               
         })
+        CountTola(ArrItems)
 }
 
+function CountTola(e)
+{
+    oders.total=0
+     e.forEach(e=>{
+        oders.total+=parseInt( e.talo) 
+      
+     })
+     Talo_Orders.innerHTML=oders.total
+    
+    
+}
 function getOrdersA()
 {
     ArrItems=JSON.parse(localStorage.getItem('data'))  ? JSON.parse(localStorage.getItem('data')) : [];
 
+    
 }
 class Oders
 {
-    constructor(data)
+    constructor(data,index)
     {
         this.DalID=data.DalID
         this.itemID=data.itemID;
@@ -388,9 +406,11 @@ class Oders
         this.discount=data.discount;
         this.Quantity=data.Quantity;
         this.talo=data.talo;
+        this.index=index
     }
     CreateOrder()
     {
+        console.log(this.index)
        let row=document.createElement('div')
             row.className='row';
        let name=document.createElement('div');
@@ -399,20 +419,25 @@ class Oders
             qty.className='name'
        let price=document.createElement('div')
             price.className='name'
-       let Edit=document.createElement('div')
-            Edit.className='name'
+       let total=document.createElement('div')
+       total.className='name'
        let Delete=document.createElement('div')
             Delete.className='name'
+        let buttDele=document.createElement('button')
+            buttDele.type='button'
+            buttDele.innerHTML=`<samp><i class="fa-duotone fa-solid fa-trash"></i> delete</samp>   `
+            buttDele.style.padding='10px 20px'
         name.innerText=this.name
         qty.innerText=this.Quantity
         price.innerText=this.price
+        total.innerHTML=this.talo
 
-
+        row.style.height='30px'
         row.appendChild(name)
         row.appendChild(qty)
         row.appendChild(price)
-        row.appendChild(Edit)
-        row.appendChild(Delete)
+        row.appendChild(total)
+        row.appendChild(Delete.appendChild(buttDele))
 
         bodyOrder.appendChild(row)
     }
@@ -421,9 +446,13 @@ class Oders
 
 submit.addEventListener('click',e=>{
     getOrdersA()
+
     oders.items=ArrItems;
     if(ArrItems !=null )
     {
+  
+
+      
         let xhr= new XMLHttpRequest()
             xhr.open('POST',ulrOrder,true)
             xhr.onload=()=>{
@@ -436,6 +465,8 @@ submit.addEventListener('click',e=>{
                 data.append('type','insert')
                 data.append('OrderID',oders.OrderID)
                 data.append('CutID',oders.CutID)
+                data.append("total",oders.total)
+                data.append('TypePush',Select.value)
                 data.append('items',JSON.stringify(oders.items))
 
             xhr.send(data)

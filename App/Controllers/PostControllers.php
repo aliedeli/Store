@@ -50,6 +50,10 @@ class PostControllers
      {
       return viewpost('Account');
      }
+     public function AotuTatol()
+     {
+      return viewpost('AotuTatol');
+     }
 
 
 }

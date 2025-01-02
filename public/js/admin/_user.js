@@ -86,6 +86,7 @@ class User{
         this.typeName=data.typeName;
         this.created_at=data.created_at;
         this.active=data.active
+        this.UserStatus=data.Status
 
 
     }
@@ -107,10 +108,16 @@ class User{
             buttShow.innerHTML='<i class="fa-solid fa-eye"></i><samp>show</samp>';
         let Boxedit=document.createElement('div');
             Boxedit.className='edit';
-        let butedit=document.createElement('button');
-            butedit.type='button';
-            butedit.className='btn-edit'
-            butedit.innerHTML='<i class="fa-solid fa-eye-slash"></i><samp>Disble</samp>';
+        let buttStatus=document.createElement('button');
+            buttStatus.type='button';
+            buttStatus.className='btn-edit'
+            if(this.UserStatus > 0)
+            {
+                buttStatus.innerHTML='<i class="fa-solid fa-eye-slash"></i><samp>Disble</samp>';
+            }else{
+                buttStatus.innerHTML='<i class="fa-solid fa-eye"></i><samp>Enble</samp>';
+            }
+           
         let BoxDele=document.createElement('div')
             BoxDele.className='delete' 
         let butdelete=document.createElement('button');
@@ -120,7 +127,7 @@ class User{
            
             
             Boxshow.appendChild(buttShow)
-            Boxedit.appendChild(butedit)
+            Boxedit.appendChild(buttStatus)
             BoxDele.appendChild(butdelete)
 
 
@@ -137,6 +144,7 @@ class User{
             
             buttShow.addEventListener( 'click',e=>this.Show())
             butdelete.addEventListener('click',e=>this.Delete(this))
+            buttStatus.addEventListener('click',e=>this.Status(this))
 
     }
     Show()
@@ -207,10 +215,10 @@ class User{
             butshow.innerHTML=VinnerHTML(htmlshow);
         let edit=document.createElement('div');
             edit.className='edit'
-        let butedit=document.createElement('button')
-            butedit.type='button'
+        let buttStatus=document.createElement('button')
+            buttStatus.type='button'
            
-            butedit.innerHTML=VinnerHTML(pow.Updates);;
+            buttStatus.innerHTML=VinnerHTML(pow.Updates);;
         let BOxdelete=document.createElement('div')
             BOxdelete.className='delete';
         let butdelete=document.createElement('button')     
@@ -218,7 +226,7 @@ class User{
            
             butdelete.innerHTML=VinnerHTML(pow.Deletes);
             show.appendChild(butshow)
-            edit.appendChild(butedit)
+            edit.appendChild(buttStatus)
             BOxdelete.appendChild(butdelete)
             row.appendChild(name)
             row.appendChild(show)
@@ -227,11 +235,11 @@ class User{
 
             row.appendChild(BOxdelete)
 
-            butedit.addEventListener('click' , (e)=>{
+            buttStatus.addEventListener('click' , (e)=>{
 
              
                 pow.Updates > 0 ?  pow.Updates=0 : pow.Updates=1 ;
-                butedit.innerHTML= VinnerHTML( pow.Updates);
+                buttStatus.innerHTML= VinnerHTML( pow.Updates);
                 this.EitdPowers(pow)
 
         })
@@ -273,8 +281,37 @@ class User{
           
         return row;
     }
-    Eitd()
+    Status()
     {
+      let myPromise= new Promise((r,j)=>{
+            let xhr=new XMLHttpRequest()
+            xhr.open("POST",'/App/User/',true)
+            xhr.onload=()=>{
+                if(xhr.status==200 && xhr.readyState == 4)
+                    {
+                        console.log(xhr.responseText);
+                        r(JSON.parse(xhr.response))
+                    }
+                    else
+                    {
+                        j("Error")
+                    }
+            }
+            let data=new FormData()
+                data.append('type','Status')
+                data.append('status',this.UserStatus > 0 ? 0 : 1 )
+                xhr.send(data)
+                
+      })
+      myPromise.then(data=>{
+            if(data.status)
+            {
+                GetUser()
+            
+            }
+   
+      })
+
 
     }
     EitdPowers(Powers,type)
@@ -286,6 +323,7 @@ class User{
                 xhr.onload=()=>{
                     if(xhr.status==200 && xhr.readyState == 4)
                     {
+                        
                         
                         r(JSON.parse(xhr.response))
                     }
@@ -448,9 +486,9 @@ class UserScreens
         butshow.innerHTML="Show";
     let edit=document.createElement('div');
         edit.className='edit'
-    let butedit=document.createElement('button')
-        butedit.type='button'
-        butedit.innerHTML="edit";
+    let buttStatus=document.createElement('button')
+        buttStatus.type='button'
+        buttStatus.innerHTML="edit";
     let BOxdelete=document.createElement('div')
         BOxdelete.className='delete';
     let butdelete=document.createElement('button')     
@@ -458,7 +496,7 @@ class UserScreens
         butdelete.innerHTML='delete'
 
         show.appendChild(butshow)
-            edit.appendChild(butedit)
+            edit.appendChild(buttStatus)
             BOxdelete.appendChild(butdelete)
             row.appendChild(name)
             row.appendChild(show)
@@ -484,7 +522,7 @@ class UserScreens
         
         
       })
-      butedit.addEventListener("click",e=>{
+      buttStatus.addEventListener("click",e=>{
 
             if(this.Updates > 0){
                 this.Updates=0

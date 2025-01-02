@@ -24,53 +24,71 @@ class Accounts{
     }
     CearteHTML(){
         let row=document.createElement("div")
-        let name=document.createElement('div');
+        let Category=document.createElement('div');
+        let Description=document.createElement('div');
+        let Amount=document.createElement('div');
+        let PaymentMethod=document.createElement('div');
+
         let edit=document.createElement('div');
         let dele=document.createElement('div');
         let buttEdit=document.createElement('button');
         let buttDele=document.createElement('button');
         row.classList.add('row')
-        name.classList.add('name')
+        Category.classList.add('name')
+        Description.classList.add('name')
+        Amount.classList.add('name')
+        PaymentMethod.classList.add('name')
         edit.classList.add('edit')
         dele.classList.add('delete')
         buttEdit.innerHTML=`
-        <i class="fas fa-edit"></i>
-         <samp>Edit</samp>     
+        <i class="fa-solid fa-eye"></i> / <i class="fa-solid fa-pen-to-square"></i>   
         `
-        buttDele.innerHTML=`
-        <i class="fas fa-trash-alt"></i>
-        <samp>Delete</samp>
-        `
+        buttDele.innerHTML=` <i class="fa-solid fa-trash"></i> `
         edit.appendChild(buttEdit)
         dele.appendChild(buttDele)
-        name.innerHTML=this.Name;
-        row.appendChild(name)
+        Category.innerHTML=this.Name;
+        Description.innerHTML=this.accountType
+        Amount.innerHTML=this.balance
+        PaymentMethod.innerHTML=this.PaymentMethod
+        row.appendChild(Category)
+        row.appendChild(Description)
+        row.appendChild(Amount)
+        row.appendChild(PaymentMethod)
+
         row.appendChild(edit)
         row.appendChild(dele)
         BoxItems.appendChild(row)
         buttEdit.addEventListener('click',_=>this.EventEDit(this))
         buttDele.addEventListener('click',_=>this.EventDelete(this))
-
     }
     EventEDit(){
-       let boxEdit= document.querySelector('.form-edit-cat');
+        let boxEdit= document.querySelector('.form-edit-cat');
        let from=boxEdit.querySelector('#Cate_edit')
-       let inputName=from.querySelector('input');
+       let Category=from.querySelector('.Category');
+       let Description=from.querySelector('.Description');
+       let Amount=from.querySelector('.Amount');
+       let PaymentMethod=from.querySelector('.PaymentMethod');
        let butClose=from.querySelector(".btn-Close")
+      
        boxEdit.classList.add('active');
        butClose.addEventListener("click",_=>boxEdit.classList.remove('active'))
-       inputName.value=this.Name;
+       Category.value=this.Name;
+       Description.value=this.accountType;
+       Amount.value=this.balance;
+       PaymentMethod.value=this.PaymentMethod;
+       
+  
 
        
        from.addEventListener("submit",e=>{
         e.preventDefault()
         let myPromise= new Promise((r,j)=>{
             let xhr= new XMLHttpRequest()
-            xhr.open("POST", UrlAccounts,true)
+            xhr.open("POST", UrlExpenses,true)
             xhr.onload=()=>{
                 if(xhr.status==200 && xhr.readyState == 4){
     
-                   
+                 
                     r(JSON.parse(xhr.response))
                 }else{
                     j("Error")
@@ -87,9 +105,9 @@ class Accounts{
         myPromise.then(
             data=>{
                 if(data.status){
-                    GetAccounts()
+                    GetExpenses()
                 }else{
-                    GetAccounts()
+                    GetExpenses()
                 }
             })
     })
@@ -158,7 +176,7 @@ form.addEventListener("submit",e=>{
         xhr.open("POST", UrlAccounts,true)
         xhr.onload=()=>{
             if(xhr.status==200 && xhr.readyState == 4){
-                console.log(xhr.responseText)
+               
                 r(JSON.parse(xhr.response))
             }else{
                 j("Error")

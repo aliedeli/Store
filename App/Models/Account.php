@@ -59,7 +59,7 @@ class Account
     {
         if($this->insertAccounts())
         {
-            $this->insertAccountTransactions($this->accountID, "debit", $this->balance);
+            // $this->insertAccountTransactions($this->accountID, "debit", $this->balance);
             return true;
         }
         else
