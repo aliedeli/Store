@@ -77,7 +77,7 @@ class Category
     public function update()
     {
     
-        $app= $this->Connt->prepare("UPDATE categorys SET catName = :name where catID=:id ");
+        $app= $this->Connt->prepare("UPDATE categorys SET catName=:name where catID=:id ");
         $app->bindParam(":name",$this->name);
         $app->bindParam(":id",$this->id);
         $Chik=$app->execute();

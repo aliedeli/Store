@@ -66,7 +66,7 @@ class Categorys{
             xhr.onload=()=>{
                 if(xhr.status==200 && xhr.readyState == 4){
     
-                   
+                  
                     r(JSON.parse(xhr.response))
                 }else{
                     j("Error")

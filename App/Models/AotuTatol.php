@@ -19,32 +19,57 @@ class AotuTatol
 
     }
     public function Orders()  {
+        $this->total=0;
         $stmt = $this->db->prepare("SELECT total FROM Orders");
         $stmt->execute();
         $brands = $stmt->fetchAll(PDO::FETCH_ASSOC);
             foreach($brands as $brand){
               $this->total+=$brand['total'];
             }
-            json_data(['total'=>$this->total]);
+          return $this->total;
             
     }
     public function expenses() {
+        $this->total=0;
         $stmt = $this->db->prepare("SELECT Amount FROM MonthlyExpenses");
         $stmt->execute();
         $brands = $stmt->fetchAll(PDO::FETCH_ASSOC);
             foreach($brands as $brand){
               $this->total+=$brand['Amount'];
             }
-            json_data(['total'=>$this->total]);
+        return $this->total;
             
     }
+    public function Accounts() {
+        $this->total=0;
+        $stmt = $this->db->prepare("SELECT balance FROM Accounts");
+        $stmt->execute();
+        $brands = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach($brands as $brand){
+              $this->total+=$brand['balance'];
+            }
+           return  $this->total;
 
+    }
+    public function total()
+    {
+        $this->arr = [
+            'orders' => (int) self::Orders(),
+            'expenses' => self::expenses(),
+            'accounts' => self::Accounts()
+        ];
+        echo json_encode($this->arr);
+    }
     public function METHOD()
     {
         if($_SERVER['REQUEST_METHOD'] === "POST")
         {
 
-            if($this->type == "orders")
+            if($this->type == "total")
+            {
+                self::total();
+            }
+            elseif ($this->type == "orders")
             {
                 self::Orders();
             }
@@ -53,6 +78,10 @@ class AotuTatol
               
                 self::expenses();
             } 
+            elseif ($this->type == "accounts")
+            {
+                self::Accounts();
+            }
         }
        
       }

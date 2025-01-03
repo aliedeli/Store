@@ -299,6 +299,8 @@ class User{
             }
             let data=new FormData()
                 data.append('type','Status')
+                data.append('UserID',this.id)
+                
                 data.append('status',this.UserStatus > 0 ? 0 : 1 )
                 xhr.send(data)
                 

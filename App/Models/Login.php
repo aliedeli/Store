@@ -35,13 +35,20 @@ class Login
        {
             if(password_verify($this->password,$result[0]['password']))
             {
-                session_start();
-                $_SESSION['UserName']=$result[0]['UserName'] ;
-                $_SESSION['nameAll']=$result[0]['nameAll'] ;
-                $_SESSION['UserID']=$result[0]['UserID'] ;
-                $_SESSION['TpyeID']=$result[0]['TpyeID'] ;
-                
-                echo json_encode(["status"=>true]);
+                if($result[0]['Status'] > 0)
+                {
+                    session_start();
+                    $_SESSION['UserName']=$result[0]['UserName'] ;
+                    $_SESSION['nameAll']=$result[0]['nameAll'] ;
+                    $_SESSION['UserID']=$result[0]['UserID'] ;
+                    $_SESSION['TpyeID']=$result[0]['TpyeID'] ;
+                    
+                    echo json_encode(["status"=>true]);
+                  
+                }else{
+                    echo json_encode(["status"=>false,"message"=>'Your account is not active' ]);
+                }
+          
             }else{
                 echo json_encode(["status"=>false,"message"=>'Invalid username or password' ]);
             }

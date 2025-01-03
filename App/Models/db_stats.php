@@ -42,13 +42,7 @@ ORDER BY SchemaName");
     }
 }
 
-// Usage
-// $config = [
-//     'host' => 'localhost',
-//     'dbname' => 'your_database',
-//     'username' => 'your_username',
-//     'password' => 'your_password'
-// ];
+
 
 $dbStats = new DatabaseStats(new Database());
 echo json_encode($dbStats->getStats());

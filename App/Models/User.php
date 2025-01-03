@@ -214,7 +214,7 @@ Class User
         
         $sql=$this->db->prepare("UPDATE T_User SET Status=:Status where UserID=:UserID");
         $sql->bindValue(':Status', $this->Status );
-        $sql->bindValue(':UserID',  $this->UesrID );
+        $sql->bindValue(':UserID',  $this->id );
         $results= $sql->execute();
         if($results)
         {

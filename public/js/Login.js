@@ -23,7 +23,7 @@ form.addEventListener('submit',e=>{
         xhr.open('POST','/App/Login',true);
 
         xhr.onload=()=>{
-            console.log(xhr)
+            
             if(xhr.status==200 && xhr.readyState == 4){
                console.log(xhr.responseText)
              r(JSON.parse(xhr.response));
