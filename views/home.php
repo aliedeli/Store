@@ -34,7 +34,7 @@ session();
             </div>
         </div>
 
-        <div class="body">
+        <div class="body" id="body-item">
             <div class="box-infos">
                 <div class="row" id="box_infos">
 

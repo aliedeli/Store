@@ -10,62 +10,92 @@ const table=document.querySelector('.table')
 let newScreenarr=[];
 
 
-// function getSceens()
-// {
+function getSceens()
+{
     
 
-//       let myPromise=new Promise((r,j)=>{
-//         let xhr=new XMLHttpRequest()
-//             xhr.open("POST",'/App/User/',true)
-//             xhr.onload=()=>{
-//                 if(xhr.status==200 && xhr.readyState == 4)
-//                 {
+      let myPromise=new Promise((r,j)=>{
+        let xhr=new XMLHttpRequest()
+            xhr.open("POST",'/App/User/',true)
+            xhr.onload=()=>{
+                if(xhr.status==200 && xhr.readyState == 4)
+                {
                     
                    
-//                     r(JSON.parse(xhr.response))
-//                 }
-//                 else
-//                 {
-//                     j("Error")
-//                 }
-//             }
-//             let data=new FormData()
-//                 data.append('type','FullScreens')
-//                 xhr.send(data);
-//     }).then(data=>{
-//         bodyUser.innerHTML='';
-//         Screens=data;
+                    r(JSON.parse(xhr.response))
+                }
+                else
+                {
+                    j("Error")
+                }
+            }
+            let data=new FormData()
+                data.append('type','FullScreens')
+                xhr.send(data);
+    })
+    myPromise.then(data=>{
+    
+        bodyUser.innerHTML='';
+        newScreenarr=data;
+      
+        newScreenarr.forEach((e,index)=>{
+           
+            let newScreenarr= new UserScreens(e,index)
+                newScreenarr.Screens()
 
-//         data.forEach(e=>{
-//             Screen.ScrID=e.ScrID
-//             Screen.name=e.Name
-//             let newScreen=new UserScreens(Screen,data.indexOf(e))
-//             newScreen.Screens()
-       
-            
-//            })
+        })
 
-//     })
+
+    })
    
-  
-// }
+    function  uintID(){
+        let id= new Date().getTime()
+           newid=id.toString().slice(7)
+           
+            
+        return newid
+      
+    
+    }
+    FormUser.addEventListener("submit",e=>{
+       
+         e.preventDefault()
+        
+        myPromise=new Promise((r,j)=>{
+            let xhr=new XMLHttpRequest();
+                xhr.open('POST','App/User/',true)
+                xhr.onload=()=>{
+                    if(xhr.status==200 && xhr.readyState == 4)
+                    {
+                        console.log(xhr.responseText)
+                        // r(JSON.parse(xhr.response))
+                    }
+                }
+                let data = new FormData(FormUser);
+                    data.append('Power',JSON.stringify(newScreenarr))
+                    data.append("UserID",uintID())
+                    data.append('type','insert')
+    
+                    xhr.send(data)
+        })
+        myPromise.then(data=>{
+            console.log(data)
+            // if(data.status)
+            // {
+    
+            //     BoxnewUser.classList.remove('active');
+            //     GetUser()
+            // }else{
+    
+            // }
+        })
+     })
+    
+}
+ getSceens()
 
-//  getSceens()
 
 
-
- let Screens =[
-     {ScrID: '1', name: 'Home', Views: true, Updates: true, Deletes: true},
-    {ScrID: '2', name: 'Dashboard', Views: true, Updates: true, Deletes: true},
-    {ScrID: '3', name: 'Categorys', Views: true, Updates: true, Deletes: true},
-    {ScrID: '4', name: 'Items', Views: true, Updates: true, Deletes: true},
-    {ScrID: '5', name: 'User', Views: true, Updates: true, Deletes: true},
-    {ScrID: '6', name: 'Customers', Views: true, Updates: true, Deletes: true},
-    {ScrID: '7', name: 'NewOrders', Views: true, Updates: true, Deletes: true},
-    {ScrID: '8', name: 'orders', Views: true, Updates: true, Deletes: true},
-    {ScrID: '9', name: 'Expenses', Views: true, Updates: true, Deletes: true}
-
-    ]
 
 AddUser.addEventListener("click",e=>{
     BoxnewUser.classList.add('active');
@@ -289,7 +319,7 @@ class User{
             xhr.onload=()=>{
                 if(xhr.status==200 && xhr.readyState == 4)
                     {
-                        console.log(xhr.responseText);
+                       
                         r(JSON.parse(xhr.response))
                     }
                     else
@@ -380,7 +410,7 @@ class User{
             })
         })
         myPromise.then(data=>{
-            console.log(data)
+          
         })
 
     }
@@ -464,22 +494,28 @@ class UserScreens
 {
     constructor(data,index)
     {
+      
 
         this.ScrID=data.ScrID;
-        this.name=data.name;
+        this.name=data.Name;
+        this.filte=data.filte;
         this.Views=data.Views;
         this.Updates=data.Updates;
         this.Deletes=data.Deletes;
+        this.childes=data.childes;
         this.index=index;
+    
+
     }
     Screens()
     {
-        
+     
+
      let row=document.createElement('div')
         row.className='row';
     let name=document.createElement('div')
         name.className='name';
-        name.innerText=this.name
+        name.innerText=this.filte > 0 ? `list:${this.childes.length}  `  + this.name : this.name;
     let show=document.createElement('div')
         show.className='show';
     let butshow=document.createElement('button')
@@ -506,17 +542,25 @@ class UserScreens
 
 
             row.appendChild(BOxdelete)
-
+            console.log(row)
             bodyUser.appendChild(row)
+            if(this.filte==1)
+                {
+                    this.childes.forEach((e,i)=>{
+                        
+                        bodyUser.appendChild(this.child(e,i)) 
+                    })
+                }
 
       butdelete.addEventListener("click",e=>{
             if(this.Deletes > 0){
                 this.Deletes =0
-               Screens[this.index].Deletes=0
+                newScreenarr[this.index].Deletes=0
+                
 
             }else{
                 this.Deletes =1
-               Screens[this.index].Deletes=1
+                newScreenarr[this.index].Deletes=1
 
             }
  
@@ -528,12 +572,12 @@ class UserScreens
 
             if(this.Updates > 0){
                 this.Updates=0
-                Screens[this.index].Updates=0
+                newScreenarr[this.index].Updates=0
              
             }else
             {
                 this.Updates=1
-                Screens[this.index].Updates=1
+                newScreenarr[this.index].Updates=1
             }
        
       
@@ -544,10 +588,10 @@ class UserScreens
       butshow.addEventListener("click",e=>{
         if(this.Views > 0){
         this.Views =0
-        Screens[this.index].Views=0
+        newScreenarr[this.index].Views=0
         } else{
             this.Views =1
-            Screens[this.index].Views=1
+            newScreenarr[this.index].Views=1
         }
         
       })
@@ -555,54 +599,93 @@ class UserScreens
       
 
     }
-    
-}
+    child(data,i){
+     
+        let row=document.createElement('div')
+        row.className='row';
+    let name=document.createElement('div')
+        name.className='name';
+         name.innerText= i +' :'+ data.Name
+    let show=document.createElement('div')
+        show.className='show';
+    let butshow=document.createElement('button')
+        butshow.type='button'
+        butshow.className='edit'
+        butshow.innerHTML="Show";
+    let edit=document.createElement('div');
+        edit.className='edit'
+    let buttStatus=document.createElement('button')
+        buttStatus.type='button'
+        buttStatus.innerHTML="edit";
+    let BOxdelete=document.createElement('div')
+        BOxdelete.className='delete';
+    let butdelete=document.createElement('button')
+        butdelete.type='button'
+        butdelete.innerHTML='delete'
+        show.appendChild(butshow)
+        edit.appendChild(buttStatus)
+        BOxdelete.appendChild(butdelete)
+        row.appendChild(name)
+        row.appendChild(show)
+        row.appendChild(edit)
+        row.appendChild(BOxdelete)
 
-
-bodyUser.innerHTML='';
-Screens.forEach((e,index)=>{
-   
-    let newScreen= new UserScreens(e,index)
-       newScreen.Screens()
-})
-
-function  uintID(){
-    let id= new Date().getTime()
-       newid=id.toString().slice(7)
-       
-        
-    return newid
-  
-
-}
-FormUser.addEventListener("submit",e=>{
-   
-     e.preventDefault()
-    
-    myPromise=new Promise((r,j)=>{
-        let xhr=new XMLHttpRequest();
-            xhr.open('POST','App/User/',true)
-            xhr.onload=()=>{
-                if(xhr.status==200 && xhr.readyState == 4)
-                {
-                    r(JSON.parse(xhr.response))
-                }
+        butdelete.addEventListener("click",e=>{
+            if(data.Deletes > 0){
+                data.Deletes =0
+                newScreenarr[this.index].childes[i].Deletes=0
+                
             }
-            let data = new FormData(FormUser);
-                data.append('Power',JSON.stringify(Screens))
-                data.append("UserID",uintID())
-                data.append('type','insert')
+            else{
+                data.Deletes =1
+                newScreenarr[this.index].childes[i].Deletes=1
+              
+            }
+                })
 
-                xhr.send(data)
-    })
-    myPromise.then(data=>{
-        if(data.status)
-        {
+                buttStatus.addEventListener("click",e=>{
+                    if(data.Updates > 0){
+                        data.Updates=0
+                        newScreenarr[this.index].childes[i].Updates=0
+                    }
+                    else
+                    {
+                        data.Updates=1
+                        newScreenarr[this.index].childes[i].Updates=1
+                        }
+                })
+            butshow.addEventListener("click",e=>{
+                    if(data.Views > 0){
+                        data.Views =0
+                        newScreenarr[this.index].childes[i].Views=0
+                    } else{
+                        data.Views =1
+                        newScreenarr[this.index].childes[i].Views=1
+                    }
+                    })
 
-            BoxnewUser.classList.remove('active');
-            GetUser()
-        }else{
+        
 
-        }
-    })
- })
+
+
+        return row;
+
+
+        
+
+
+
+
+    }
+
+    
+}
+
+
+// bodyUser.innerHTML='';
+// Screens.forEach((e,index)=>{
+   
+//     let newScreen= new UserScreens(e,index)
+//        newScreen.Screens()
+// })
+

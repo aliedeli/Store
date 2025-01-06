@@ -5,7 +5,7 @@
 use App\Database\Database;
 use App\Models\Logger;
 use App\trait\Role;
-use App\trait\RoleUser;
+use App\trait\Screens;
 use PDO;
 // require_once __DIR__ . '/../../vendor/autoload.php';
 // require_once __DIR__ . '/../../routes/wed.php';
@@ -15,7 +15,7 @@ session_start();
 Class User 
 {
     use Role;
-    use RoleUser;
+    use Screens;
     private $db;
     private $Database;
     private $id;
@@ -24,7 +24,7 @@ Class User
     private $email;
     private $password;
     private $activeUser;
-    public $tpye_M;
+    public $type;
     private $userGender;
     public $UserID;
     public $UserType;
@@ -49,14 +49,14 @@ Class User
         
         $this->name=filter_input(INPUT_POST,'name',FILTER_SANITIZE_SPECIAL_CHARS) ?? NULL;
         $this->UserName=filter_input(INPUT_POST,'UserName',FILTER_SANITIZE_SPECIAL_CHARS) ?? NULL;;
-        $this->id=filter_input(INPUT_POST,'UserID',FILTER_SANITIZE_SPECIAL_CHARS) ?? NULL;
+        $this->id=(int) filter_input(INPUT_POST,'UserID',FILTER_SANITIZE_SPECIAL_CHARS) ?? NULL;
         $this->email=filter_input(INPUT_POST,'email',FILTER_SANITIZE_SPECIAL_CHARS) ?? NULL;
         $this->password=filter_input(INPUT_POST,'password',FILTER_SANITIZE_SPECIAL_CHARS) ?? NULL;
         $this->password= password_hash( $this->password,PASSWORD_BCRYPT) ?? null;
         $this->userGender=filter_input(INPUT_POST,'gender',FILTER_SANITIZE_SPECIAL_CHARS) ?? null;
         $this->UserType=filter_input(INPUT_POST,'tpyeUser',FILTER_SANITIZE_NUMBER_INT) ?? null;
         $this->userGender == "Male" ? "M" : "F" ;
-        $this->tpye_M=filter_input(INPUT_POST,'type',FILTER_SANITIZE_SPECIAL_CHARS) ?? null;
+        $this->type=filter_input(INPUT_POST,'type',FILTER_SANITIZE_SPECIAL_CHARS) ?? null;
         $this->UesrID=$_SESSION['UserID'];
         $this->UesrTypeID=$_SESSION['TpyeID'];
         $this->Power=filter_input(INPUT_POST,'Power') ?? null;
@@ -71,16 +71,19 @@ Class User
 
        
         $this->Role($this->db);
-        $this->RoleUser($this->db);
+       
     }
 
     public function insert()
     { 
    
 
+    
+
+      
           $User=$this->db->prepare("INSERT INTO T_User (UserID,nameAll,UserName,password,email,TpyeID,userBirthdate,userGender,created_at )  VALUES
            (:UserID,:name,:UserName,:password,:email,:TpyeID,GETDATE(),:userGender,:created_at)");
-        $User->bindValue(':UserID', (int)$this->id);
+        $User->bindValue(':UserID', $this->id);
         $User->bindValue(':name',$this->name);
         $User->bindValue(':UserName',$this->UserName);
         $User->bindValue(':email',$this->email);
@@ -94,8 +97,16 @@ Class User
      
            
                 foreach($this->Power as  $vlaue){
+                   
+                    $this->PowersInsert($this->id,$vlaue);
+                   if((int) $vlaue->filte  > 0){
                     
-                    $this->PowersInsert($vlaue);
+                    foreach($vlaue->childes as  $Child){
+
+                        $this->PowersInsertChild($this->id,$Child);
+                    
+                }
+            }
                     
                 }
               json_data(["status"=>true]);
@@ -105,39 +116,9 @@ Class User
                 json_data(["status"=>false]);
             }
      }
-    public function PowersInsert($date)
-    {
-       $id= uniqid();
+  
 
-        $Power= $this->db->prepare("INSERT INTO  Power (PowerID,Views,Updates,Deletes,ScrID) VALUES (:PowerID,:Views,:Updates,:Deletes,:ScrID) ");
-         $Power->bindValue(':PowerID', $id);
-        $Power->bindValue(':Views',  $date->Views);
-        $Power->bindValue(':Updates', $date->Updates);
-        $Power->bindValue(':Deletes',  $date->Deletes);
-        $Power->bindValue(':ScrID', (int) $date->ScrID);
-        $Powers= $Power->execute();
-            if( $Powers){
-                 $this->RolesPowers($id);
-            }else{
-                
-            }
-    }    
 
-    public function RolesPowers($id)
-    {
-        $RoleID= uniqid();
-        $Roles= $this->db->prepare("INSERT INTO  Roles (RoleID,PowerID,UserID) VALUES (:RoleID,:PowerID,:UserID) ");
-         $Roles->bindValue(':RoleID', $RoleID);
-        $Roles->bindValue(':PowerID',$id);
-        $Roles->bindValue(':UserID', $this->id);
-        $Roless= $Roles->execute();
-            if( $Roless){
-                
-            }else{
-                
-            }
-
-    }
     public function ScreensUser()
     {
         $users=[];
@@ -161,7 +142,7 @@ Class User
         foreach($read as  $vlaues)
         {
             
-            $vlaues['Powers']=$this->Power($vlaues['UserID']);
+            // $vlaues['Powers']=$this->Power($vlaues['UserID']);
             array_push($users,$vlaues);
         }
        
@@ -280,17 +261,7 @@ Class User
     }
     public function ScreenAll()
     {
-        $users=[];
-        $user= $this->db->query("SELECT  * FROM   Screens  ORDER BY  ScrID ASC   ");
-        $user->execute();
-         $read=$user->fetchAll(PDO::FETCH_ASSOC);
-         foreach($read as  $vlaues)
-         {
-             
-             array_push($users,$vlaues);
-         }
-        
-            echo json_encode($users);        
+       json_data($this->getScreens())  ;
     }
 
     public function Chik()
@@ -299,47 +270,48 @@ Class User
         {
             
         
-            if($this->tpye_M == "insert")
+            if($this->type == "insert")
             {
-                 $this->insert();
+             
+                   $this->insert();
                 
             }
-            elseif($this->tpye_M == "update")
+            elseif($this->type == "update")
             {
 
             }
-            elseif($this->tpye_M == "read")
+            elseif($this->type == "read")
             {
                 $this->read();
             }
-            elseif($this->tpye_M == "delete")
+            elseif($this->type == "delete")
             {
                 $this->RolesDelete();
             }
-            elseif($this->tpye_M == "Screen")
+            elseif($this->type == "Screen")
             {
                  $this->CreateScreen();
             }
-            elseif($this->tpye_M =='Powers')
+            elseif($this->type =='Powers')
             {
                  $this->PowersUpdate();
             }
-            elseif($this->tpye_M== 'ScreenUser')
+            elseif($this->type== 'ScreenUser')
             {
                 $this->ScreensUser();
             }
-            elseif($this->tpye_M == 'where'){
+            elseif($this->type == 'where'){
                 $this->Where();
             }
-            elseif($this->tpye_M == 'active'){
+            elseif($this->type == 'active'){
                 $this->active();
             }
-            elseif($this->tpye_M == 'FullScreens')
+            elseif($this->type == 'FullScreens')
             {
                 $this->ScreenAll();
 
             }
-            elseif($this->tpye_M == 'Status')
+            elseif($this->type == 'Status')
             {
               
                  $this->UpdateStatus();

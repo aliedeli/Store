@@ -16,8 +16,6 @@
                         <input type="text" name="name" id="name" >
                     </div>
             </div>
-        </div>
-        <div class="row">
             <div class="input">
                 <div class="icon">
                 <i class="fa-light fa-user"></i>
@@ -30,7 +28,19 @@
                     </div>
             </div>
         </div>
+
         <div class="row">
+        <div class="input">
+                <div class="icon">
+                <i class="fa-light fa-user"></i>
+                </div>
+                    <div class="text">
+                        <samp>Emali</samp>
+                    </div>
+                    <div class="value">
+                        <input type="email" name="email" id="email" >
+                    </div>
+            </div>
             <div class="input">
                 <div class="icon">
                 <i class="fa-light fa-user"></i>
@@ -43,19 +53,7 @@
                     </div>
             </div>
         </div>
-        <div class="row">
-            <div class="input">
-                <div class="icon">
-                <i class="fa-light fa-user"></i>
-                </div>
-                    <div class="text">
-                        <samp>Emali</samp>
-                    </div>
-                    <div class="value">
-                        <input type="email" name="email" id="email" >
-                    </div>
-            </div>
-        </div>
+
         <div class="row">
             <div class="input">
                 <div class="icon">
@@ -173,7 +171,9 @@
                     </div>
                </div>
         </div>
-        <div class="button">
+
+    </div>
+    <div class="button">
             <button type="submit">
                 <i class="fa-solid fa-floppy-disk"></i>
                 <samp>save</samp>
@@ -184,8 +184,6 @@
                 <samp>cloes</samp>
             </button>
         </div>
-    </div>
-  
 </form>
 
 </div>

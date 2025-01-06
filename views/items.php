@@ -72,6 +72,11 @@
                         <div class="values">
                             <input type="text" id="search"  placeholder="Search">
                         </div>
+                        <div class="sele">
+                            <select name="cate" id="show">
+                           
+                            </select>
+                        </div>
                         <div class="date">
                             <input type="date" name="date" id="date">
                         </div>

@@ -191,7 +191,7 @@ class Items implements Models
     {
       
         $array=[];
-        $where = $this->Connt->query("SELECT * FROM items WHERE   itemName like '%$this->search%'   OR  qrCode like '%$this->search%'  ");
+        $where = $this->Connt->query("where_Items @search='%$this->search%'  ");
         $where->execute();
         $results=$where->fetchAll(PDO::FETCH_ASSOC);
         foreach($results as $result)
@@ -289,6 +289,25 @@ class Items implements Models
           $this->read();
         }
     }
+    public function searchCat()
+    {
+        $array=[];
+        $where=$this->Connt->query("where_Items_categorys @catID=$this->category , @search='%$this->search%'");
+        $where->execute();
+        $results=$where->fetchAll(\PDO::FETCH_ASSOC);;
+        if($results)
+        {
+          foreach($results as $row)
+          {
+            array_push($array,$row);
+          }
+          json_data($array);
+        }
+        else
+        {
+          $this->where();
+        }
+    }
 public function Chik()
 {
     if($_SERVER['REQUEST_METHOD'] === "POST" )
@@ -327,6 +346,10 @@ public function Chik()
             // print_r($_POST);
              $this->searchDate();
 
+        }
+        elseif($this->type == "searchCat"){
+            // print_r($_POST);
+             $this->searchCat();
         }
 
     }

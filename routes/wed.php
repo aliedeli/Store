@@ -4,10 +4,10 @@ use App\Controllers\HomeController;
 use App\Controllers\PostControllers;
 // GET
 Route::get("/",[HomeController::class,'index']);
+Route::get("/login",[HomeController::class,'login']);
 Route::get("/home",[HomeController::class,'index']);
 Route::get("/items",[HomeController::class,'items']);
 Route::get("/categorys",[HomeController::class,'Categorys']);
-Route::get("/login",[HomeController::class,'login']);
 Route::get("/user",[HomeController::class,'user']);
 Route::get("/orders",[HomeController::class,'orders']);
 Route::get("/addorders",[HomeController::class,'Addorders']);

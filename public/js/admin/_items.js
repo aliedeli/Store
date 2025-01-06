@@ -20,7 +20,9 @@ const shoeimg=document.getElementById("shoeimg");
 const boxImg=document.querySelector('.box-img')
 const searchDate=document.getElementById('date')
 const Brands=document.getElementById('Brands')
+const selectshow=document.getElementById('show')
 const UrlIems="/App/items"
+
 GET_Items()
 images.forEach(e=>{
     e.addEventListener("input",event=>{
@@ -131,6 +133,31 @@ myCategory.then(data=>{
         itemsCategory.appendChild(option)
     })
 })
+let  myCategory_1=new Promise((r,j)=>{
+    let xhr= new XMLHttpRequest();
+    xhr.open("POST",'/App/Category',true)
+    xhr.onload = function(){
+        if(xhr.status === 200 && xhr.readyState){
+          
+            r(  JSON.parse(xhr.response))
+        }else{
+           
+            j("Error");
+        }
+    }
+    let data = new FormData()
+    data.append("type",'read')
+    xhr.send(data)
+})
+myCategory_1.then(data=>{
+    selectshow.innerHTML=`<option selected value="all">Select Category</option>`;
+    data.forEach(cat=>{
+        let option = document.createElement("option");
+        option.value = cat.catID;
+        option.text = cat.catName;
+        selectshow.appendChild(option)
+    })
+})
 let  myBrands=new Promise((r,j)=>{
     let xhr= new XMLHttpRequest();
     xhr.open("POST",'/App/brand',true)
@@ -156,7 +183,18 @@ myBrands.then(data=>{
         Brands.appendChild(option)
     })
 })
+let Category={
+    name:""
+}
+selectshow.addEventListener("change",e=>{
+    if(e.target.value == "all"){
+        Category.name=""
+    }else{
+        Category.name=e.target.value
+    }
 
+
+})
 
 FromItems.addEventListener('submit',e=>{
     e.preventDefault()
@@ -362,7 +400,7 @@ button1.innerHTML=` <i class="fa-light fa-pen-to-square"></i> Close`
         li7.innerHTML=`<samp></samp>  <h4> Role : </h4> ${this.Role}`
         li8.innerHTML=`<samp></samp> <h4> Row : </h4>  ${this.row}`
         li9.innerHTML=`<samp></samp>  <h4> Shelf : </h4> ${this.shelf}`
-        li_1.innerHTML=`<samp></samp>  <h4> brandName : </h4> ${this.brandName}`
+        li_1.innerHTML=`<samp></samp>  <h4>brand: </h4> ${this.brandName}`
         li_2.innerHTML=`<samp></samp>  <h4> Likes : </h4> ${this.likes}`
 
 
@@ -955,7 +993,7 @@ function GET_Items(){
        
         body.innerHTML="";
        data.forEach(row => {
-         console.log(row)
+        
 
             let item=new items(row);
             item.CearteHTML();
@@ -966,44 +1004,58 @@ function GET_Items(){
 
 
 searchinput.addEventListener('input',e=>{
-    myPromise= new Promise((r,j)=>{
-        let xhr= new XMLHttpRequest()
-        xhr.open("POST",UrlIems,true);
-        xhr.onload=()=>{
-            if(xhr.status==200 && xhr.readyState == 4){
-           
-                if( JSON.parse(xhr.response)){
-                    r(JSON.parse(xhr.response))
+    if(e.target.value == ""){
+        GET_Items()
+    }else{
+        myPromise= new Promise((r,j)=>{
+            let xhr= new XMLHttpRequest()
+            xhr.open("POST",UrlIems,true);
+            xhr.onload=()=>{
+                if(xhr.status==200 && xhr.readyState == 4){
+               
+                    if( JSON.parse(xhr.response)){
+                        r(JSON.parse(xhr.response))
+                    }
+                    else{
+                        GET_Items()
+                    }
+                    
                 }
-                else{
+                else
+                {
                     GET_Items()
                 }
+            }
+            let data = new FormData()
+            if( Category.name === "all"){
                 
+                data.append("search",e.target.value)
+                data.append("Category", Category.name)
+                data.append("type",'searchCat')
+            }else{
+                data.append("type",'where')
+                data.append("search",e.target.value)
             }
-            else
-            {
-                j("error")
-            }
-        }
-        let data = new FormData()
-        data.append("type",'where')
-        data.append("search",e.target.value)
-
-        xhr.send(data)
-        
-
-
-    })
-    myPromise.then(data=>{
-        body.innerHTML="";
-        
-        data.forEach(row => {
+       
+           
+    
+            xhr.send(data)
             
+    
+    
+        })
+        myPromise.then(data=>{
             body.innerHTML="";
-                let item=new items(row);
-                item.CearteHTML();
+            
+            data.forEach(row => {
+                
+                body.innerHTML="";
+                    let item=new items(row);
+                    item.CearteHTML();
+    
+               });
+        })
+    }
 
-           });
-    })
 
 })

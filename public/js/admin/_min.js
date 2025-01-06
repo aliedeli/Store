@@ -1,7 +1,24 @@
 const BoxInfos=document.getElementById('box_infos')
 const NavList=document.querySelector('.link')
 const DataInfo =document.querySelectorAll("[data-info]")
+const Buttonav=document.querySelector('.nav-button')
+const Nav=document.querySelector('.nav-link')
+const BoxItems=document.querySelector('#body-item')
 
+
+Buttonav.addEventListener('click',()=>{
+    Nav.classList.toggle('active')
+    if(Nav.classList.contains('active'))
+    {
+       
+        Buttonav.innerHTML="<i class='fa-solid fa-arrow-right'></i>"    
+    }else{
+        Buttonav.innerHTML="<i class='fa-solid fa-arrow-left'></i>"
+    }
+
+
+
+})
 let infoData=[]
 window.onblur=()=>{
     let myPromise= new Promise((r,j)=>{
@@ -68,39 +85,93 @@ let myPromiseNav= new Promise((r,j)=>{
         xhr.send(data)
 })
 myPromiseNav.then((data)=>{
+
     NavList.innerHTML='';
     let ul = document.createElement("ul");
         ul.className="ul"
     data.forEach(e=>{
         e.forEach(ev=>{
           
-           
+          
             let li=document.createElement("li")
                 li.className='nav-list';
             let a=document.createElement("a")
-                a.href=ev.url;
+                    if(ev.url == "NULL")
+                    {
+                        a.href="#"
+                        
+                    }
+                    else{
+                        a.href=ev.url;
+                    }
+              
             let divicon=document.createElement("div")
                 divicon.className="icon";
                 divicon.innerHTML=ev.icon;
             let divText=document.createElement('div');
             divText.className='text';
                 divText.innerText=ev.Name;
-            
+          
+           
 
             //app ul
             ul.appendChild(li);
             li.appendChild(a);
+            
             a.appendChild(divicon);
             a.appendChild(divText);
 
             NavList.appendChild(ul)
 
-                
+      
             if(ev.filte > 0)
             {
-                let ulmian =document.createElement('ul')
+               
+                  let icon=document.createElement('samp')
+            icon.innerHTML='<i class="fas fa-arrow-alt-down"></i>'
+            
+
+            icon.style=`  position: absolute;
+                         top: 20%;
+                         right: 0;
+                        color:var(--light-gray);
+                        font-size: 20px;
+                        font-family: Arial, Helvetica, sans-serif;
+                        font-weight: bold;`
+
+            let ulmian =document.createElement('ul')
                 ulmian.className='lislMian'
+              
+            
                 ev.childe.forEach(ch=>{
+                    let index=0;
+                    a.addEventListener('click',e=>{
+               
+                       
+                        if(index == 0)
+                        {
+                            ulmian.classList.add('active');
+                             icon.innerHTML='<i class="fas fa-arrow-alt-up"></i>'
+                           
+                            index=1;
+
+                        }else{
+                            ulmian.classList.remove('active');
+                            icon.innerHTML='<i class="fas fa-arrow-alt-down"></i>'
+                            
+                            index=0;
+                        }
+
+                    
+                      
+
+                         e.preventDefault();
+                        
+                    })
+                    // ulmian.addEventListener('mouseout',e=>{
+                    //     ulmian.classList.remove('active');
+                       
+                    // })
                    
                     let liM=document.createElement("li")
                     liM.className='nav-list';
@@ -120,7 +191,9 @@ myPromiseNav.then((data)=>{
                     ulmian.appendChild(liM)
                     
                 })
-                // li.appendChild(ulmian)
+                a.appendChild(icon)
+                li.appendChild(ulmian)
+            
                 
             }
         })

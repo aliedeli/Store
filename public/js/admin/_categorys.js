@@ -83,6 +83,8 @@ class Categorys{
         myPromise.then(
             data=>{
                 if(data.status){
+                    boxEdit.classList.remove('active');
+                    inputName.value=""
                     GetCategorys()
                 }else{
                     GetCategorys()

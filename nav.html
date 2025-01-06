@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<style>
+    body{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        width: 100%;
+        height: 100vh;
+    }
+    .sidebar{
+        position: fixed;
+        width: 260px;
+        height: 100%;
+        background: #11101d;
+        transition: all 0.5s;
+        top: 0; 
+        left: 0;
+        .logo-details{
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10px;
+            i{
+                color: #fff;
+                font-size: 25px;
+                height: 50px;
+                line-height: 50px;
+               text-align: center;
+               line-height: 50px;
+            }
+            .logo_name{
+                font-size: 20px;
+                color: #fff;
+                font-weight: 600;
+            }
+        }
+        .nav-links{
+            position: relative;
+            height: 100%;
+            padding: 30px 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            li{
+                width: 100%;
+                position: relative;
+                list-style: none;
+
+                .icon-link{
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding: 10px 20px;
+                    transition: all 0.4s ease;
+                    a{
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    text-decoration: none;
+                    color: #fff;
+                    font-size: 18px;
+                    font-weight: 500;
+                    padding: 10px 20px;
+                    transition: all 0.4s ease;
+                    i{
+                       height: 50px;
+                       min-width: 50px;
+                       text-align: center;
+                       line-height: 50px;
+                       color: #fff;
+                       font-size: 20px;
+                    }
+                    .link_name{
+                            font-size: 18px;
+                            white-space: nowrap;
+                            color: #fff;
+                    }
+                }
+                .arrow{
+                    color: #fff;
+                    font-size: 20px;
+                }
+                }
+                .sub-menu{
+                    background: #1d1b31;
+                    display: none;
+                    position: absolute;
+                    top: 0;
+                    left: 100%;
+                    width: 100%;
+                    padding: 10px 20px;
+                    border-radius: 0 0 10px 10px;
+                    li{
+                        width: 100;
+                        list-style: none;
+                        a{
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            padding: 10px 20px;
+                            text-decoration: none;
+                            color: #fff;
+                            font-size: 18px;
+                            font-weight: 500;
+                            transition: all 0.4s ease;
+                            i{
+                                height: 50px;
+                                min-width: 50px;
+                                text-align: center;
+                                line-height: 50px;
+                                color: #fff;
+                                font-size: 20px;
+                            }
+                            .link_name{
+                                font-size: 18px;
+                                white-space: nowrap;
+                                color: #fff;
+                            }
+                        }
+                    .sub-menu-link{
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 10px 20px;
+                        text-decoration: none;
+                        color: #fff;
+                        font-size: 18px;
+                        font-weight: 500;
+                        transition: all 0.4s ease;
+                        i{
+                            height: 50px;
+                            min-width: 50px;
+                            text-align: center;
+                            line-height: 50px;
+                            color: #fff;
+                            font-size: 20px;
+                         }
+                         .link_name{
+                            font-size: 18px;
+                            white-space: nowrap;
+                            color: #fff;
+                         }
+                    }
+                }
+             
+            }
+            .active{
+                background: #fff;
+                color: #11101d;
+            }
+        }
+
+    }
+    }
+</style>
+<body>
+    <div class="sidebar">
+        <div class="logo-details">
+            <i class="fas fa-utensils"></i>
+            <span class="logo_name">Food Order</span>
+
+        </div>
+        <ul class="nav-links">
+      
+            <li>
+                <div class="icon-link">
+                    <a href="#">
+                        <i class="fas fa-home"></i>
+                        <span class="link_name">Home</span>
+                    </a>
+
+                    <i class="bx bxs-chevron-down arrow"></i>
+
+                </div>
+                <ul class="sub-menu-link">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Home</a></li>
+                    </ul>
+            </li>
+            <li>
+                <div class="icon-link">
+                    <a href="#">
+                        <i class="fas fa-utensils"></i>
+                        <span class="link_name">Food</span>
+                    </a>
+                </div>
+         
+            </li>
+            <li>
+                <div class="icon-link">
+                    <a href="#">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="link_name">Order</span>
+                    </a>
+                </div>
+                
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fas fa-user"></i>
+                    <span class="link_name">Account</span>
+                </a>
+            </li>
+            </ul>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+</body>
+</html>
