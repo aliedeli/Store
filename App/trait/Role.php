@@ -38,11 +38,11 @@ trait Role
         $stmt->bindParam(':id', $this->UesrTypeID);
         $stmt->execute();
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // $this->RolesUser() ;
         foreach($results  as $result){
-
-            $this->UesrType=$result['typeName'];
-            $this->UesrType  == 'user' ? $this->RolesUser() : $this->RolesUser()  ;
-              
+            
+             $this->UesrType=$result['typeName'];
+             $this->UesrType  == 'user' ?  $this->RolesUser() : $this->RolesUser()  ;
               
             
         }
@@ -66,15 +66,17 @@ trait Role
             $this->Updates=$vlaues['Updates'];
             $this->Deletes=$vlaues['Deletes'];
             $this->ScrID= $vlaues['ScrID'];
-     
+            
             if($this->Views > 0){
-                array_push( $Screens,$this->Screen()) ;
+
+                 array_push( $Screens,$this->Screen()) ;
             }
        
 
         }
+       
         
-        json_data($Screens)   ;
+         json_data($Screens)   ;
           
     }
     

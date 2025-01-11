@@ -23,22 +23,29 @@ if(!function_exists('value')){
  
 function session()
 {
-    session_start();
-    if($_SESSION['UserName'] != null)
-    {
-       if($_SESSION['UserID']){
 
-       }
-    }
-    else
-    {
-          header('Location:/login');
-    }
-    if(isset($_GET['out'])){
-        session_destroy();
-        header('Location:/login');
+     $session = new \App\Controllers\session();
 
-    }
+     $session->start();
+      
+  
+     if($session->get('UserName') != null){
+     
+        
+        if(isset($_GET['out'])){
+              session_destroy();
+            
+            $session->revomeSession();
+             header('Location:/login');
+        }
+     }
+     else
+     {
+        $session->revomeSession();
+         header('Location:/login');
+     }
+
+
 }
 
 

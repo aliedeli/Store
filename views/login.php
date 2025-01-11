@@ -1,9 +1,12 @@
 <?php
 
-session_start();
+use App\Controllers\session;
+$session=new session();
+$session->start();
 
-if (isset($_SESSION['UserName'])) {
-    header("Location: \home");
+
+if ($session->has('UserName')) {
+    header("Location: /home");  
     exit();
 }
 ?>

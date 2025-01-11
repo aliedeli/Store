@@ -2,7 +2,7 @@
 namespace App\trait;
 use App\Database\Database;
 use PDO;
-trait Screens
+trait Screens  
 {
     public $Conn;
     public $Views;
@@ -60,7 +60,7 @@ trait Screens
       
         
         $id=(int)$this->id;
-        $Power= $this->db->prepare("INSERT INTO  Power (Views,Updates,Deletes,UserID,ScrID) VALUES (:Views,:Updates,:Deletes,:UserID,:ScrID) ");
+        $Power= $this->Conn->prepare("INSERT INTO  Power (Views,Updates,Deletes,UserID,ScrID) VALUES (:Views,:Updates,:Deletes,:UserID,:ScrID) ");
         $Power->bindValue(':UserID', $id);
         $Power->bindValue(':Views',  $date->Views);
         $Power->bindValue(':Updates', $date->Updates);
@@ -87,9 +87,54 @@ trait Screens
         $stmt->execute();
         return $stmt;
     }  
-    
+    public function getPower($id)
+    {
+        $Power=[];
+        $stmt =$this->Conn->prepare("SELECT * FROM Power join Screens on Screens.ScrID=Power.ScrID  WHERE Power.UserID=:id");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if($results)
+        {
+            foreach($results as $result)
+            {
+              
+                if($result['filte'] > 0)
+                {
+                    $result['childes']=$this->getPowerChildesScreens($id,$result['ScrID']);
+                   
+                }     
+                array_push($Power,$result);         
+
+            }
+          
+        }
+        return $Power;
+        
+}
+public function getPowerChildesScreens($UserID, $id)
+{
+    $Power = [];
+
+    $stmt = $this->Conn->prepare("SELECT  PowerChiles.PowerID, PowerChiles.Views,PowerChiles.Deletes,PowerChiles.Updates,childes.icon ,childes.Name,childes.ScrID
+FROM PowerChiles INNER JOIN childes ON childes.childID=PowerChiles.childID  WHERE PowerChiles.UserID=:UserID AND childes.ScrID=:id");
+    $stmt->bindParam(':UserID', $UserID);
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    if ($results) {
+        foreach ($results as $result) {
+   
+           
+                array_push($Power, $result);
+            
+        }
+    }
+    return $Power;
 }
 
-    
+
+
+}
 
 ?>

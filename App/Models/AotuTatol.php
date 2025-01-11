@@ -4,7 +4,7 @@ use App\Database\Database;
 use PDO;
 
 
-class AotuTatol  
+class AotuTatol   
 {
     public $type;
     public $db;
@@ -12,7 +12,7 @@ class AotuTatol
     public $total;
     public function __construct()
     {
-        $this->db= (new Database())->conn();
+        $this->db=(new Database())->conn();
         $this->total=0;
         $this->type=$_POST['type'];
         self::METHOD();

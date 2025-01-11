@@ -3,7 +3,7 @@ const NavList=document.querySelector('.link')
 const DataInfo =document.querySelectorAll("[data-info]")
 const Buttonav=document.querySelector('.nav-button')
 const Nav=document.querySelector('.nav-link')
-const BoxItems=document.querySelector('#body-item')
+// const BoxItems=document.querySelector('#body-item')
 
 
 Buttonav.addEventListener('click',()=>{
@@ -72,7 +72,8 @@ let myPromiseNav= new Promise((r,j)=>{
         xhr.open('POST','/App/User/',true)
         xhr.onload=()=>{
             if(xhr.status ===200 && xhr.readyState === 4)
-            {
+            { 
+                console.log(xhr.responseText )
                
                  r(JSON.parse(xhr.response))
             }else
@@ -90,7 +91,9 @@ myPromiseNav.then((data)=>{
     let ul = document.createElement("ul");
         ul.className="ul"
     data.forEach(e=>{
+        
         e.forEach(ev=>{
+           
           
           
             let li=document.createElement("li")
@@ -110,6 +113,8 @@ myPromiseNav.then((data)=>{
                 divicon.innerHTML=ev.icon;
             let divText=document.createElement('div');
             divText.className='text';
+            divText.setAttribute('data-lag',ev.lag);
+
                 divText.innerText=ev.Name;
           
            
@@ -144,51 +149,55 @@ myPromiseNav.then((data)=>{
               
             
                 ev.childe.forEach(ch=>{
-                    let index=0;
-                    a.addEventListener('click',e=>{
-               
-                       
-                        if(index == 0)
-                        {
-                            ulmian.classList.add('active');
-                             icon.innerHTML='<i class="fas fa-arrow-alt-up"></i>'
-                           
-                            index=1;
-
-                        }else{
-                            ulmian.classList.remove('active');
-                            icon.innerHTML='<i class="fas fa-arrow-alt-down"></i>'
-                            
-                            index=0;
-                        }
-
-                    
-                      
-
-                         e.preventDefault();
-                        
-                    })
-                    // ulmian.addEventListener('mouseout',e=>{
-                    //     ulmian.classList.remove('active');
-                       
-                    // })
                    
-                    let liM=document.createElement("li")
-                    liM.className='nav-list';
-                let aM=document.createElement("a")
-                    aM.href=ch.url;
-                let diviconM=document.createElement("div")
-                    diviconM.className="icon";
-                    diviconM.innerHTML=ch.icon;
-                let divTextM=document.createElement('div');
-                divTextM.className='text';
-                    divTextM.innerText=ch.Name;
+                    if(ch.Views > 0){
+                        let index=0;
 
-                    
-                    liM.appendChild(aM);
-                    aM.appendChild(diviconM);
-                    aM.appendChild(divTextM);
-                    ulmian.appendChild(liM)
+                        a.addEventListener('click',e=>{
+                   
+                            
+                            if(index == 0)
+                            {
+                                ulmian.classList.add('active');
+                                 icon.innerHTML='<i class="fas fa-arrow-alt-up"></i>'
+                               
+                                index=1;
+    
+                            }else{
+                                ulmian.classList.remove('active');
+                                icon.innerHTML='<i class="fas fa-arrow-alt-down"></i>'
+                                
+                                index=0;
+                            }
+    
+                        
+                          
+    
+                             e.preventDefault();
+                            
+                        })
+     
+                       
+                        let liM=document.createElement("li")
+                        liM.className='nav-list';
+                    let aM=document.createElement("a")
+                        aM.href=ch.url;
+                    let diviconM=document.createElement("div")
+                        diviconM.className="icon";
+                        diviconM.innerHTML=ch.icon;
+                    let divTextM=document.createElement('div');
+                    divTextM.className='text';
+                        divTextM.innerText=ch.Name;
+                        divTextM.setAttribute('data-lag',ch.lag);
+           
+                        
+                        liM.appendChild(aM);
+                        aM.appendChild(diviconM);
+                        aM.appendChild(divTextM);
+                        ulmian.appendChild(liM)
+                        
+                    }
+                 
                     
                 })
                 a.appendChild(icon)
@@ -199,6 +208,34 @@ myPromiseNav.then((data)=>{
         })
  
     })
+    // let lilag=document.querySelectorAll('[data-lag]')
+    // lilag.forEach(e=>{
+        
+    //     const data = JSON.stringify({
+    //         target_lang: 'ar',
+    //         text: e.dataset.lag
+    //     });
+        
+    //     const xhr = new XMLHttpRequest();
+    //     xhr.withCredentials = true;
+        
+    //     xhr.addEventListener('readystatechange', function () {
+    //         if (this.readyState === this.DONE) {
+    //             console.log(this.responseText);
+    //             e.innerText=JSON.parse(this.responseText).translatedText;
+    //         }
+    //     });
+        
+    //     xhr.open('POST', 'https://openl-translate.p.rapidapi.com/translate');
+    //     xhr.setRequestHeader('x-rapidapi-key', '0808036388msh7c261794071982bp1dd4b0jsn0144933f5dde');
+    //     xhr.setRequestHeader('x-rapidapi-host', 'openl-translate.p.rapidapi.com');
+    //     xhr.setRequestHeader('Content-Type', 'application/json');
+        
+    //     xhr.send(data);
+      
+       
+    // })
+
             
 })
 

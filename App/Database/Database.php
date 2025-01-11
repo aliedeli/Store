@@ -1,20 +1,21 @@
 <?php
 
 namespace App\Database;
- use PDO;
+
+use App\Controllers\session;
+use PDO;
 
 // use function PHPSTORM_META\type;
 
-class Database{
+class Database extends  session  
+{
     private $host;
     private $prot;
     private $user;
     private $pwd;
     private $dbName;
     public $db;
-    // public function Database(){
-    // ;
-    // }
+  
     public function __construct()
     {
         $this->host="127.0.0.1";
@@ -28,7 +29,7 @@ public  function conn(){
 
     try{
 
-        // $conn= new PDO("mysql:host=$this->host;dbname=$this->dbName",$this->user,$this->pwd);
+        
         $conn = new PDO("sqlsrv:server=$this->host,$this->prot; TrustServerCertificate=true; Database= $this->dbName", $this->user, $this->pwd );
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
        
@@ -64,12 +65,12 @@ public function bind($param,$vlaue,$type=null)
             
     }
 
-    $this->db->bindParam($param ,$vlaue ,$type);
+    return $this->db->bindParam($param ,$vlaue ,$type);
 }
 
 public function fetchAll()  
 {
-  $this->db->fetchAll(PDO::FETCH_ASSOC);
+  return $this->db->fetchAll(PDO::FETCH_ASSOC);
 
 }
 public function execute() 

@@ -59,7 +59,7 @@
                         </div>
                     </div>
                     <div class="add-cate">
-                        <button class="btn-add">
+                        <button class="btn-add-ex" id="add-expenses">
                             <i class="fa-light fa-plus"></i>
                             <samp>Add expenses</samp></button>
                     </div>
@@ -217,7 +217,8 @@
 
 
     <script src="../js/all.min.js"></script>
-    <script src="../js/admin/_min.js"></script>
     <script src="../js/admin/expenses.js"></script>
+    <script src="../js/admin/_min.js"></script>
+    
 </body>
 </html>

@@ -6,7 +6,7 @@
                     <i class="fa-duotone fa-solid fa-user"></i>
                 </div>
                 <div class="text">
-                    <samp><?= $_SESSION['UserName']?? null ?></samp>
+                    <samp><?= env('APP_NAME'); ?></samp>
                 </div>
             </div>
             <div class="users">

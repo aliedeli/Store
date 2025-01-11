@@ -1,10 +1,10 @@
-const btnAdd=document.querySelector('.btn-add');
 const BoxCate=document.querySelector('.form-add-cat')
 const form=document.getElementById('Category')
 const BottClose=form.querySelector('.btn-Close')
 const search=document.getElementById('search');
 const BoxItems=document.querySelector(".table .body")
 const searchDate=document.getElementById('date')
+const btnAdd=document.getElementById('add-expenses');
 const UrlExpenses='/App/expenses'
 
 btnAdd.addEventListener('click',_=>{

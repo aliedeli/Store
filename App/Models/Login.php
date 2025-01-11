@@ -1,29 +1,31 @@
 <?php
+
+use App\Controllers\session;
 use App\Database\Database;
 use App\trait\Role;
 use SecTheater\Support\Hash;
 
-class Login  
+class Login
 {
-    use Role;
+   
     private $db;
     private $username;
     private $password;
     private $type;
     public $tpyeID;
-
-    // private $rememberMe;
+    public $session;
     // private $rememberMeToken;
     // private $rememberMeTokenExpiration;
     public function __construct($conn)
     {
-       
+       $this->session= new  session();
+       // private $rememberMe;=$conn->conn();
         $this->db=$conn->conn();
         $this->username = filter_input(INPUT_POST,"UserName",FILTER_SANITIZE_SPECIAL_CHARS);
         $this->password = filter_input(INPUT_POST,"password",FILTER_SANITIZE_SPECIAL_CHARS);
         $this->type = filter_input(INPUT_POST,"type",FILTER_SANITIZE_SPECIAL_CHARS);
       
-         
+         self::METHOD();
     }
     public function Loingin() 
     {
@@ -37,12 +39,12 @@ class Login
             {
                 if($result[0]['Status'] > 0)
                 {
-                    session_start();
-                    $_SESSION['UserName']=$result[0]['UserName'] ;
-                    $_SESSION['nameAll']=$result[0]['nameAll'] ;
-                    $_SESSION['UserID']=$result[0]['UserID'] ;
-                    $_SESSION['TpyeID']=$result[0]['TpyeID'] ;
                     
+                    $this->session->start();
+                    $this->session->set('UserName',$result[0]['UserName']);
+                    $this->session->set('nameAll',$result[0]['nameAll']);
+                    $this->session->set('UserID',$result[0]['UserID']);
+                    $this->session->set('UserTypeID',$result[0]['TpyeID']);
                     echo json_encode(["status"=>true]);
                   
                 }else{
@@ -61,7 +63,7 @@ class Login
        
 
     }
-    public function chik()
+    public function METHOD()
      {
         if($_SERVER['REQUEST_METHOD']=== "POST")
         {
@@ -77,4 +79,4 @@ class Login
 
 }
 $LoginNew= new Login(new Database() );
-$LoginNew->chik();
+

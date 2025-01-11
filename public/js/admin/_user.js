@@ -222,19 +222,27 @@ class User{
 
    
             this.Powers.forEach(e=>{
-                 bodyUser.appendChild(this.Power(e))
+                bodyUser.appendChild(this.Power(e))
+                if(e.filte > 0)
+                {
+                    
+                    e.childes.forEach(c=>{
+                        bodyUser.appendChild(this.childes(c))
+                    })
+                }
+               
                 
              })
              table.appendChild(BoxUesr)
              buttonClose.addEventListener("click",()=>BoxUesr.remove())
     }
     Power(pow){
-      
+      console.log(pow)
         let row=document.createElement('div')
             row.className='row';
         let name=document.createElement('div')
             name.className='name';
-            name.innerText=pow.Name
+            name.innerText= pow.filte != "0" ? pow.Name + '->' :pow.Name ;
         let show=document.createElement('div')
             show.className='show';
         let butshow=document.createElement('button')
@@ -270,7 +278,7 @@ class User{
              
                 pow.Updates > 0 ?  pow.Updates=0 : pow.Updates=1 ;
                 buttStatus.innerHTML= VinnerHTML( pow.Updates);
-                this.EitdPowers(pow)
+                this.EitdPowers(pow,'Powers')
 
         })
 
@@ -280,7 +288,7 @@ class User{
           
             pow.Deletes > 0 ?  pow.Deletes=0 : pow.Deletes=1 ;
             butdelete.innerHTML= VinnerHTML( pow.Deletes);
-            this.EitdPowers(pow)
+            this.EitdPowers(pow,'Powers')
         
     })
 
@@ -292,6 +300,92 @@ class User{
                     pow.Views=this.EitdPowers(pow , pow.Views )
                     pow.Views > 0 ?  pow.Views=0 : pow.Views=1 ;
                     butshow.innerHTML= VinnerHTML(  pow.Views);
+                    GetUser()
+                  
+
+                   
+                  
+                   
+            })
+            function VinnerHTML(vlaue){
+                if(vlaue == 0)
+                {
+                    return '<i class="fa-solid fa-eye"></i><samp>Disble</samp>' ;
+                }else{
+                    return '<i class="fa-solid fa-check"></i><samp>Enble</samp>' ;
+                }
+
+            }
+
+          
+
+        return row;
+    }
+    childes(childes)
+    {
+           
+        let row=document.createElement('div')
+            row.className='row';
+        let name=document.createElement('div')
+            name.className='name';
+            name.innerText=childes.Name
+        let show=document.createElement('div')
+            show.className='show';
+        let butshow=document.createElement('button')
+            butshow.type='button'
+            butshow.className='edit'
+         
+        let htmlshow=childes.Views > 0 ? 0 : 1 ;
+            butshow.innerHTML=VinnerHTML(htmlshow);
+        let edit=document.createElement('div');
+            edit.className='edit'
+        let buttStatus=document.createElement('button')
+            buttStatus.type='button'
+           
+            buttStatus.innerHTML=VinnerHTML(childes.Updates);;
+        let BOxdelete=document.createElement('div')
+            BOxdelete.className='delete';
+        let butdelete=document.createElement('button')     
+            butdelete.type='button'
+           
+            butdelete.innerHTML=VinnerHTML(childes.Deletes);
+            show.appendChild(butshow)
+            edit.appendChild(buttStatus)
+            BOxdelete.appendChild(butdelete)
+            row.appendChild(name)
+            row.appendChild(show)
+            row.appendChild(edit)
+
+
+            row.appendChild(BOxdelete)
+
+            buttStatus.addEventListener('click' , (e)=>{
+
+             
+                childes.Updates > 0 ?  childes.Updates=0 : childes.Updates=1 ;
+                buttStatus.innerHTML= VinnerHTML( childes.Updates);
+               this.EitdPowers(childes,'childes')
+
+        })
+
+                
+        butdelete.addEventListener('click' , (e)=>{
+
+          
+            childes.Deletes > 0 ?  childes.Deletes=0 : childes.Deletes=1 ;
+            butdelete.innerHTML= VinnerHTML( childes.Deletes);
+           this.EitdPowers(childes,'childes')
+        
+    })
+
+
+            butshow.addEventListener('click' , e=>{
+        
+                   
+                childes.Views > 0 ?  childes.Views=0 : childes.Views=1 ;
+                childes.Views=this.EitdPowers(childes , childes.Views,'childes' )
+                childes.Views > 0 ?  childes.Views=0 : childes.Views=1 ;
+                    butshow.innerHTML= VinnerHTML(  childes.Views);
                     GetUser()
                   
 
@@ -346,8 +440,9 @@ class User{
 
 
     }
-    EitdPowers(Powers,type)
+    EitdPowers(Powers,value,type)
     {
+        console.log(Powers)
      
         let myPromise=new Promise((r,j)=>{
             let xhr=new XMLHttpRequest()
@@ -356,7 +451,7 @@ class User{
                     if(xhr.status==200 && xhr.readyState == 4)
                     {
                         
-                        
+                        console.log(xhr.responseText)
                         r(JSON.parse(xhr.response))
                     }
                     else
@@ -365,7 +460,7 @@ class User{
                     }
                 }
                 let data=new FormData()
-                    data.append('type','Powers')
+                    data.append('type',type)
                     data.append('powerID',Powers.PowerID)
                     data.append('views',Powers.Views)
                     data.append('updates',Powers.Updates)
@@ -373,15 +468,16 @@ class User{
 
                     xhr.send(data);
         })
+        let status=false;
    myPromise.then(data=>{
            if(data.status)
            {
-            type= true
+            status= true
            }else{
-            type= false
+            status= false
            }
         })
-        return type;
+//         return status;
     }
     Delete()
     {
@@ -464,7 +560,7 @@ function GetUser()
             xhr.onload=()=>{
                 if(xhr.status==200 && xhr.readyState == 4)
                 {
-                    
+                   
                     r(JSON.parse(xhr.response))
                 }
                 else
@@ -477,7 +573,7 @@ function GetUser()
                 xhr.send(data);
     })
     myPromise.then(data=>{
-       
+       console.log(data)
         Boxbody.innerHTML='';
         data.forEach(e=>{
           let Users=new User(e)

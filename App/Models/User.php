@@ -2,6 +2,7 @@
 
  namespace App\User;
 
+use App\Controllers\session;
 use App\Database\Database;
 use App\Models\Logger;
 use App\trait\Role;
@@ -10,7 +11,7 @@ use PDO;
 // require_once __DIR__ . '/../../vendor/autoload.php';
 // require_once __DIR__ . '/../../routes/wed.php';
 
-session_start();
+// session_start();
 
 Class User 
 {
@@ -36,6 +37,7 @@ Class User
     public $Power;
     public $search;
     public $Status;
+    public $session;
     
 
 
@@ -46,22 +48,23 @@ Class User
     {
       
         $this->db=$conn->Conn();
-        
+        $this->session= new  session();
+        $this->session->start();
         $this->name=filter_input(INPUT_POST,'name',FILTER_SANITIZE_SPECIAL_CHARS) ?? NULL;
-        $this->UserName=filter_input(INPUT_POST,'UserName',FILTER_SANITIZE_SPECIAL_CHARS) ?? NULL;;
+        $this->UserName=filter_input(INPUT_POST,'UserName',FILTER_SANITIZE_SPECIAL_CHARS) ?? NULL;
         $this->id=(int) filter_input(INPUT_POST,'UserID',FILTER_SANITIZE_SPECIAL_CHARS) ?? NULL;
         $this->email=filter_input(INPUT_POST,'email',FILTER_SANITIZE_SPECIAL_CHARS) ?? NULL;
         $this->password=filter_input(INPUT_POST,'password',FILTER_SANITIZE_SPECIAL_CHARS) ?? NULL;
         $this->password= password_hash( $this->password,PASSWORD_BCRYPT) ?? null;
         $this->userGender=filter_input(INPUT_POST,'gender',FILTER_SANITIZE_SPECIAL_CHARS) ?? null;
         $this->UserType=filter_input(INPUT_POST,'tpyeUser',FILTER_SANITIZE_NUMBER_INT) ?? null;
-        $this->userGender == "Male" ? "M" : "F" ;
+        $this->userGender = $this->userGender == "Male" ? "M" : "F";
         $this->type=filter_input(INPUT_POST,'type',FILTER_SANITIZE_SPECIAL_CHARS) ?? null;
-        $this->UesrID=$_SESSION['UserID'];
-        $this->UesrTypeID=$_SESSION['TpyeID'];
+        $this->UesrID= $this->session->get('UserID');
+        $this->UesrTypeID= $this->session->get('UserTypeID');
         $this->Power=filter_input(INPUT_POST,'Power') ?? null;
         $this->Power=json_decode($this->Power);
-        $this->search==filter_input(INPUT_POST,'search',FILTER_SANITIZE_SPECIAL_CHARS) ?? null;
+        $this->search=filter_input(INPUT_POST,'search',FILTER_SANITIZE_SPECIAL_CHARS) ?? null;
         $this->PowerID=filter_input(INPUT_POST,'powerID',FILTER_SANITIZE_SPECIAL_CHARS) ?? null;
         $this->Views=filter_input(INPUT_POST,'views',FILTER_SANITIZE_SPECIAL_CHARS) ?? null;
         $this->Updates=filter_input(INPUT_POST,'updates',FILTER_SANITIZE_SPECIAL_CHARS) ?? null;
@@ -141,13 +144,15 @@ Class User
         $read=$user->fetchAll(PDO::FETCH_ASSOC);
         foreach($read as  $vlaues)
         {
-            
-            // $vlaues['Powers']=$this->Power($vlaues['UserID']);
-            array_push($users,$vlaues);
+           
+               
+            $vlaues['Powers']= $this->getPower($vlaues['UserID']) ;
+        
+              array_push($users,$vlaues);
         }
        
-           echo json_encode($users);
-        //   json_data($users);
+        //    echo json_encode($users);
+          json_data($users);
     }
     public function RolesDelete()
     {
@@ -206,10 +211,11 @@ Class User
             json_data(["status"=>false]);
         }
     }
-    public function CreateScreen()
+    public function NvaScreen()
     {
 
-        $this->getRole($this->UesrID,$this->UesrTypeID) ;
+        // $this->getPower($this->UesrID);
+         $this->getRole($this->UesrID,$this->UesrTypeID) ;
           
     }
    
@@ -228,6 +234,28 @@ Class User
                 json_data(["status"=>false,'msg'=> "stor Inserted Successfully "]);
             }
     } 
+    public function PowersChild()
+    {
+        echo $this->PowerID;
+        
+        echo "Views " . $this->Views;
+        echo "Updates " . $this->Updates;
+        echo "Deletes " . $this->Deletes;
+
+
+      
+        // $Power= $this->db->prepare("UPDATE   PowerChiles SET Views=:Views , Updates=:Updates ,Deletes=:Deletes WHERE PowerID =:PowerID");
+        // $Power->bindParam(':PowerID', $this->PowerID);
+        // $Power->bindParam(':Views',  $this->Views);
+        // $Power->bindParam(':Updates', $this->Updates);
+        // $Power->bindParam(':Deletes',  $this->Deletes);
+        // $Powers= $Power->execute();
+        //     if( $Powers){
+        //         json_data(["status"=>true,'msg'=> "stor Inserted Successfully "]);
+        //     }else{
+        //         json_data(["status"=>false,'msg'=> "stor Inserted Successfully "]);
+        //     }
+    }
     public function  Where()  {
       
         $users=[];
@@ -236,7 +264,7 @@ Class User
          $read=$user->fetchAll(PDO::FETCH_ASSOC);
          foreach($read as  $vlaues)
          {
-            $vlaues['Powers']=$this->Power($vlaues['UserID']);
+            // $vlaues['Powers']=$this->Power($vlaues['UserID']);
              array_push($users,$vlaues);
          }
         
@@ -268,7 +296,7 @@ Class User
     {
         if($_SERVER['REQUEST_METHOD'] === "POST")
         {
-            
+         
         
             if($this->type == "insert")
             {
@@ -290,7 +318,7 @@ Class User
             }
             elseif($this->type == "Screen")
             {
-                 $this->CreateScreen();
+                 $this->NvaScreen();
             }
             elseif($this->type =='Powers')
             {
@@ -310,6 +338,11 @@ Class User
             {
                 $this->ScreenAll();
 
+            }
+            elseif($this->type == 'childes')
+            {
+               
+                 $this->PowersChild();
             }
             elseif($this->type == 'Status')
             {
