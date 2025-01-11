@@ -3,7 +3,7 @@ use SecTheater\Http\Route;
 use App\Controllers\HomeController;
 use App\Controllers\PostControllers;
 // GET
-Route::get("/",[HomeController::class,'index']);
+Route::get("/",[HomeController::class,'index' ]);
 Route::get("/login",[HomeController::class,'login']);
 Route::get("/home",[HomeController::class,'index']);
 Route::get("/items",[HomeController::class,'items']);
@@ -16,6 +16,8 @@ Route::get("/expenses",[HomeController::class,'expenses']);
 Route::get("/dashboard",[HomeController::class,'dashboard']);
 Route::get("/brands",[HomeController::class,'brands']);
 Route::get("/Accounts",[HomeController::class,'Accounts']);
+
+
 
 
 

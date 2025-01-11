@@ -37,6 +37,7 @@ class Request
     public function header($key)
     {
         $header = 'HTTP_' . strtoupper(str_replace('-', '_', $key));
+        
         return $_SERVER[$header] ?? null;
     }
 }

@@ -55,23 +55,19 @@ trait Role
     {
         $Screens=[];
         
-        $Role=$this->Conn->prepare("SELECT * FROM Power  Where  UserID=:UserID ");
+        $Role=$this->Conn->prepare("SELECT * FROM Power  join Screens on Screens.ScrID=Power.ScrID  Where  UserID=:UserID ");
         $Role->bindParam(':UserID', $this->UesrID);
         $Role->execute();
         $Roles=$Role->fetchAll(PDO::FETCH_ASSOC);
         foreach($Roles as $vlaues)
         {
 
-            $this->Views=$vlaues['Views'];
-            $this->Updates=$vlaues['Updates'];
-            $this->Deletes=$vlaues['Deletes'];
-            $this->ScrID= $vlaues['ScrID'];
+            if($vlaues['filte']  > 0){
             
-            if($this->Views > 0){
-
-                 array_push( $Screens,$this->Screen()) ;
+                   $vlaues['childe']=$this->PowerChiles($vlaues['ScrID'],$vlaues['UserID']);
+                
             }
-       
+            array_push( $Screens,$vlaues) ;
 
         }
        
@@ -80,77 +76,79 @@ trait Role
           
     }
     
-    public function Screen(){
+    public function  PowerChiles($id,$UesrID){
         $ScreenAlls=[];
-        $Screen=$this->Conn->query("SELECT * FROM Screens where ScrID=$this->ScrID ");
-        // $Screen->bindParam(':ScrID', $this->ScrID);
+        $Screen=$this->Conn->query("SELECT  PowerChiles.PowerID, PowerChiles.Views,PowerChiles.Deletes,PowerChiles.Updates,childes.icon ,childes.Name,childes.ScrID
+    ,childes.url
+FROM PowerChiles INNER JOIN childes ON childes.childID=PowerChiles.childID  WHERE PowerChiles.UserID=$UesrID AND childes.ScrID=$id ");
+        //  $Screen->bindParam(':id', $id);
+        //  $Screen->bindParam(':UserID', $UesrID);
+
         $Screen->execute();
         $Screens= $Screen->fetchAll(PDO::FETCH_ASSOC);
         
         foreach($Screens as $screen)
         {
-            $screen['Views']=$this->Views;
-            $screen['Updates']=$this->Updates;
-            $screen['Deletes']=$this->Deletes;
+   
             
-                if($screen['filte'] > 0){
+                if($screen['Views'] > 0){
                     
-                      $screen['childe']= $this->PowerChiles();
+                    array_push( $ScreenAlls,$screen);
 
 
                 }
-           array_push( $ScreenAlls,$screen);
+         
              
         }
         return  $ScreenAlls;
            
-    }
-    public function PowerChiles(){
-        $Screens=[];
+     }
+    // public function PowerChiles(){
+    //     $Screens=[];
         
-        $Role=$this->Conn->prepare("SELECT * FROM PowerChiles  Where  UserID=:UserID ");
-        $Role->bindParam(':UserID', $this->UesrID);
-        $Role->execute();
-        $Roles=$Role->fetchAll(PDO::FETCH_ASSOC);
-        foreach($Roles as $vlaues)
-        {
+    //     $Role=$this->Conn->prepare("SELECT * FROM PowerChiles  Where  UserID=:UserID ");
+    //     $Role->bindParam(':UserID', $this->UesrID);
+    //     $Role->execute();
+    //     $Roles=$Role->fetchAll(PDO::FETCH_ASSOC);
+    //     foreach($Roles as $vlaues)
+    //     {
 
-            $this->Views=$vlaues['Views'];
-            $this->Updates=$vlaues['Updates'];
-            $this->Deletes=$vlaues['Deletes'];
+    //         $this->Views=$vlaues['Views'];
+    //         $this->Updates=$vlaues['Updates'];
+    //         $this->Deletes=$vlaues['Deletes'];
            
      
-            if($this->Views > 0){
+    //         if($this->Views > 0){
 
               
                 
-                array_push( $Screens,$this->Child($vlaues['Views'],$vlaues['Updates'],$vlaues['Deletes'])) ;
-            }
+    //             array_push( $Screens,$this->Child($vlaues['Views'],$vlaues['Updates'],$vlaues['Deletes'])) ;
+    //         }
        
-            return $Screens[0];
+    //         return $Screens[0];
        
 
-        }
-    }
-    public function Child($Views,$Updates,$Deletes){
-        $ScreenAll=[];
-        $child=$this->Conn->prepare("SELECT * FROM childes where  ScrID=:ScrID ");
-        $child->bindParam(':ScrID', $this->ScrID);
-        $child->execute();
-        $childs=$child->fetchAll(PDO::FETCH_ASSOC);
-        foreach( $childs as  $screen)
-        {
-            $screen['Views']=$Views;
-            $screen['Updates']=$Updates;
-            $screen['Deletes']=$Deletes;
+    //     }
+    // }
+    // public function Child($Views,$Updates,$Deletes){
+    //     $ScreenAll=[];
+    //     $child=$this->Conn->prepare("SELECT * FROM childes where  ScrID=:ScrID ");
+    //     $child->bindParam(':ScrID', $this->ScrID);
+    //     $child->execute();
+    //     $childs=$child->fetchAll(PDO::FETCH_ASSOC);
+    //     foreach( $childs as  $screen)
+    //     {
+    //         $screen['Views']=$Views;
+    //         $screen['Updates']=$Updates;
+    //         $screen['Deletes']=$Deletes;
         
-            array_push($ScreenAll,$screen);
+    //         array_push($ScreenAll,$screen);
 
 
-        }
-        return $ScreenAll;
+    //     }
+    //     return $ScreenAll;
 
-    }
+    // }
 
 }
 

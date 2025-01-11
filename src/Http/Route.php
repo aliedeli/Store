@@ -21,6 +21,7 @@ class Route
         self::$routes['get'][$routes]=$action;
 
 
+
     }
     public static function post($routes,$action)
 
@@ -29,6 +30,7 @@ class Route
         self::$routes['post'][$routes]=$action;
       
     }
+    
     
     public function resolve()
     {

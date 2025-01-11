@@ -237,7 +237,7 @@ class User{
              buttonClose.addEventListener("click",()=>BoxUesr.remove())
     }
     Power(pow){
-      console.log(pow)
+    
         let row=document.createElement('div')
             row.className='row';
         let name=document.createElement('div')
@@ -383,13 +383,13 @@ class User{
         
                    
                 childes.Views > 0 ?  childes.Views=0 : childes.Views=1 ;
-                childes.Views=this.EitdPowers(childes , childes.Views,'childes' )
-                childes.Views > 0 ?  childes.Views=0 : childes.Views=1 ;
-                    butshow.innerHTML= VinnerHTML(  childes.Views);
-                    GetUser()
+                // childes.Views=this.EitdPowers(childes,'childes' )
+                // childes.Views > 0 ?  childes.Views=0 : childes.Views=1 ;
+                //     butshow.innerHTML= VinnerHTML(  childes.Views);
+                //     GetUser()
                   
 
-                   
+                   console.lo(childes )
                   
                    
             })
@@ -440,9 +440,9 @@ class User{
 
 
     }
-    EitdPowers(Powers,value,type)
+    EitdPowers(Powe,type)
     {
-        console.log(Powers)
+      console.log(Powe ,'type' )
      
         let myPromise=new Promise((r,j)=>{
             let xhr=new XMLHttpRequest()
@@ -461,10 +461,10 @@ class User{
                 }
                 let data=new FormData()
                     data.append('type',type)
-                    data.append('powerID',Powers.PowerID)
-                    data.append('views',Powers.Views)
-                    data.append('updates',Powers.Updates)
-                    data.append('deletes',Powers.Deletes)
+                    data.append('powerID',Powe.PowerID)
+                    data.append('views',Powe.Views)
+                    data.append('updates',Powe.Updates)
+                    data.append('deletes',Powe.Deletes)
 
                     xhr.send(data);
         })
@@ -477,7 +477,7 @@ class User{
             status= false
            }
         })
-//         return status;
+        return status;
     }
     Delete()
     {
@@ -573,7 +573,7 @@ function GetUser()
                 xhr.send(data);
     })
     myPromise.then(data=>{
-       console.log(data)
+      
         Boxbody.innerHTML='';
         data.forEach(e=>{
           let Users=new User(e)

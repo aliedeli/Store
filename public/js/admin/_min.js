@@ -73,7 +73,7 @@ let myPromiseNav= new Promise((r,j)=>{
         xhr.onload=()=>{
             if(xhr.status ===200 && xhr.readyState === 4)
             { 
-                console.log(xhr.responseText )
+             
                
                  r(JSON.parse(xhr.response))
             }else
@@ -90,9 +90,9 @@ myPromiseNav.then((data)=>{
     NavList.innerHTML='';
     let ul = document.createElement("ul");
         ul.className="ul"
-    data.forEach(e=>{
+
         
-        e.forEach(ev=>{
+        data.forEach(ev=>{
            
           
           
@@ -149,7 +149,7 @@ myPromiseNav.then((data)=>{
               
             
                 ev.childe.forEach(ch=>{
-                   
+                   console.log(ch)
                     if(ch.Views > 0){
                         let index=0;
 
@@ -237,7 +237,6 @@ myPromiseNav.then((data)=>{
     // })
 
             
-})
 
 
 

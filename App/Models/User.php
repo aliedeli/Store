@@ -213,9 +213,9 @@ Class User
     }
     public function NvaScreen()
     {
-
-        // $this->getPower($this->UesrID);
+    
          $this->getRole($this->UesrID,$this->UesrTypeID) ;
+
           
     }
    
@@ -237,6 +237,7 @@ Class User
     public function PowersChild()
     {
         echo $this->PowerID;
+        
         
         echo "Views " . $this->Views;
         echo "Updates " . $this->Updates;
