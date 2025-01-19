@@ -28,19 +28,30 @@ class ComposerStaticInit44b714cf554eceab0b38199040c2d5db
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Polyfill\\Ctype\\' => 23,
             'Symfony\\Component\\VarDumper\\' => 28,
+            'Svg\\' => 4,
             'SecTheater\\' => 11,
+            'Sabberworm\\CSS\\' => 15,
         ),
         'P' => 
         array (
             'PhpOption\\' => 10,
         ),
+        'M' => 
+        array (
+            'Masterminds\\' => 12,
+        ),
         'G' => 
         array (
             'GrahamCampbell\\ResultType\\' => 26,
         ),
+        'F' => 
+        array (
+            'FontLib\\' => 8,
+        ),
         'D' => 
         array (
             'Dotenv\\' => 7,
+            'Dompdf\\' => 7,
         ),
         'A' => 
         array (
@@ -73,21 +84,41 @@ class ComposerStaticInit44b714cf554eceab0b38199040c2d5db
         array (
             0 => __DIR__ . '/..' . '/symfony/var-dumper',
         ),
+        'Svg\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dompdf/php-svg-lib/src/Svg',
+        ),
         'SecTheater\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
+        ),
+        'Sabberworm\\CSS\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/sabberworm/php-css-parser/src',
         ),
         'PhpOption\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
         ),
+        'Masterminds\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/masterminds/html5/src',
+        ),
         'GrahamCampbell\\ResultType\\' => 
         array (
             0 => __DIR__ . '/..' . '/graham-campbell/result-type/src',
         ),
+        'FontLib\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dompdf/php-font-lib/src/FontLib',
+        ),
         'Dotenv\\' => 
         array (
             0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
+        ),
+        'Dompdf\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dompdf/dompdf/src',
         ),
         'App\\' => 
         array (
@@ -114,6 +145,7 @@ class ComposerStaticInit44b714cf554eceab0b38199040c2d5db
         'CGIFIMAGEHEADER' => __DIR__ . '/..' . '/mpdf/mpdf/classes/gif.php',
         'CGIFLZW' => __DIR__ . '/..' . '/mpdf/mpdf/classes/gif.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'Dompdf\\Cpdf' => __DIR__ . '/..' . '/dompdf/dompdf/lib/Cpdf.php',
         'FPDF_TPL' => __DIR__ . '/..' . '/setasign/fpdi/fpdf_tpl.php',
         'FPDI' => __DIR__ . '/..' . '/setasign/fpdi/fpdi.php',
         'FilterASCII85' => __DIR__ . '/..' . '/setasign/fpdi/filters/FilterASCII85.php',

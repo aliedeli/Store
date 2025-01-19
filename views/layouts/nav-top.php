@@ -1,4 +1,4 @@
-<title><?=$_SESSION['nameAll']  ?></title>
+<title><?=$_SESSION['nameAll'] ?? null ?></title>
 <header>
         <nav>
             <div class="logo">

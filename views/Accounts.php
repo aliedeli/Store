@@ -171,9 +171,7 @@
                 <div class="name">
                 Amount
             </div>
-            <div class="name">
-                PaymentMethod
-            </div>
+       
                 <div class="edit">
                     Edit
                 </div>

@@ -24,6 +24,7 @@ Route::get("/Accounts",[HomeController::class,'Accounts']);
 
 
 // POST
+Route::post('/App/pri',[PostControllers::class,'printHelper']);
 Route::post("/info",[PostControllers::class,'info']);
 Route::post("/App/User/",[PostControllers::class,'user']);
 Route::post("/App/items",[PostControllers::class,'items']);

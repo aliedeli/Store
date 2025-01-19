@@ -54,6 +54,10 @@ class PostControllers
      {
       return viewpost('AotuTatol');
      }
+     public function printHelper()
+     {
+      return viewpost('printHelper');
+     }
 
 
 }

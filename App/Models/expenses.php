@@ -2,7 +2,7 @@
 namespace App\Models\Expenses;
 use App\Database\Database;
 use App\Models\Logger;
-session_start();
+
 class Expenses extends Logger
 {
     private $Conn;

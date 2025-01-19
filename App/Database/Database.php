@@ -7,7 +7,7 @@ use PDO;
 
 // use function PHPSTORM_META\type;
 
-class Database extends  session  
+class Database
 {
     private $host;
     private $prot;

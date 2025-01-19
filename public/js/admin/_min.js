@@ -93,7 +93,7 @@ myPromiseNav.then((data)=>{
 
         
         data.forEach(ev=>{
-           
+       
           
           
             let li=document.createElement("li")
@@ -149,7 +149,7 @@ myPromiseNav.then((data)=>{
               
             
                 ev.childe.forEach(ch=>{
-                   console.log(ch)
+               
                     if(ch.Views > 0){
                         let index=0;
 

@@ -27,7 +27,7 @@ class Accounts{
         let Category=document.createElement('div');
         let Description=document.createElement('div');
         let Amount=document.createElement('div');
-        let PaymentMethod=document.createElement('div');
+      
 
         let edit=document.createElement('div');
         let dele=document.createElement('div');
@@ -37,7 +37,7 @@ class Accounts{
         Category.classList.add('name')
         Description.classList.add('name')
         Amount.classList.add('name')
-        PaymentMethod.classList.add('name')
+      
         edit.classList.add('edit')
         dele.classList.add('delete')
         buttEdit.innerHTML=`
@@ -49,11 +49,11 @@ class Accounts{
         Category.innerHTML=this.Name;
         Description.innerHTML=this.accountType
         Amount.innerHTML=this.balance
-        PaymentMethod.innerHTML=this.PaymentMethod
+     
         row.appendChild(Category)
         row.appendChild(Description)
         row.appendChild(Amount)
-        row.appendChild(PaymentMethod)
+       
 
         row.appendChild(edit)
         row.appendChild(dele)
@@ -67,7 +67,7 @@ class Accounts{
        let Category=from.querySelector('.Category');
        let Description=from.querySelector('.Description');
        let Amount=from.querySelector('.Amount');
-       let PaymentMethod=from.querySelector('.PaymentMethod');
+      
        let butClose=from.querySelector(".btn-Close")
       
        boxEdit.classList.add('active');
@@ -75,7 +75,7 @@ class Accounts{
        Category.value=this.Name;
        Description.value=this.accountType;
        Amount.value=this.balance;
-       PaymentMethod.value=this.PaymentMethod;
+     
        
   
 

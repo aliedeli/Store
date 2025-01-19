@@ -3,8 +3,9 @@
 namespace Orders;
 use App\trait\Accounts;
 use App\Database\Database;
+use App\Models\printHelper;
 
-class Orders
+class Orders extends printHelper
 {
     use Accounts;
     private $OrderID;
@@ -110,6 +111,7 @@ class Orders
             array_push($this->Arr , $row);
         }
        json_data($this->Arr);
+  
     }
     public function OrderIems($id)
     {

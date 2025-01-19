@@ -154,26 +154,26 @@ Class User
         //    echo json_encode($users);
           json_data($users);
     }
+
+
     public function RolesDelete()
     {
-       $dele=  $this->db->prepare("DELETE  FROM Roles WHERE UserID=$this->id");
-    //    $dele->bindParam(':UserID',(int) $this->id);
+       $dele=  $this->db->prepare("DELETE  FROM Power WHERE UserID=$this->id");
        $Deletes=$dele->execute();
         if( $Deletes)
         {
-            $this->UserDelete();
-            $PowerID=json_decode($this->PowerID);
-            foreach($PowerID as $id){
-                $this->PowersDelete($id);
-            }
+     
+       
+                $this->PowersDelete($this->id);
+            json_data(["status"=>true]);
          
         }
        
     }
     public function PowersDelete($id)
     {
-        $dele=  $this->db->prepare("DELETE  FROM Power WHERE PowerID=:PowerID");
-        $dele->bindParam(':PowerID',$id);
+        $dele=  $this->db->prepare("DELETE  FROM PowerChiles WHERE UserID=:UserID");
+        $dele->bindParam(':UserID',$id);
         $Deletes=$dele->execute();
          if( $Deletes)
          {
@@ -189,6 +189,7 @@ Class User
         $Deletes=$dele->execute();
          if( $Deletes)
          {
+           
             json_data(["status"=>true]);
  
          }else{
@@ -315,7 +316,9 @@ Class User
             }
             elseif($this->type == "delete")
             {
-                $this->RolesDelete();
+                 $this->RolesDelete();
+                $this->UserDelete();
+
             }
             elseif($this->type == "Screen")
             {
@@ -357,6 +360,6 @@ Class User
 
 $user=new User( new Database());
 $user->Chik();
-//   $user->Roles(1,new Database());
+
 
 

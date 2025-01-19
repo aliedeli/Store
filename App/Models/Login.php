@@ -5,7 +5,7 @@ use App\Database\Database;
 use App\trait\Role;
 use SecTheater\Support\Hash;
 
-class Login
+class Login 
 {
    
     private $db;
@@ -19,7 +19,6 @@ class Login
     public function __construct($conn)
     {
        $this->session= new  session();
-       // private $rememberMe;=$conn->conn();
         $this->db=$conn->conn();
         $this->username = filter_input(INPUT_POST,"UserName",FILTER_SANITIZE_SPECIAL_CHARS);
         $this->password = filter_input(INPUT_POST,"password",FILTER_SANITIZE_SPECIAL_CHARS);
@@ -41,10 +40,13 @@ class Login
                 {
                     
                     $this->session->start();
+                    $this->session->createToken();
                     $this->session->set('UserName',$result[0]['UserName']);
                     $this->session->set('nameAll',$result[0]['nameAll']);
                     $this->session->set('UserID',$result[0]['UserID']);
                     $this->session->set('UserTypeID',$result[0]['TpyeID']);
+                    
+                 
                     echo json_encode(["status"=>true]);
                   
                 }else{

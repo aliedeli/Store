@@ -1,22 +1,40 @@
 <?php
 namespace App\Models;
 use App\Database\Database;
+use Dompdf\Dompdf;
 
- include_once __DIR__ . "/../vendor/autoload.php";
+
 
 class printHelper   {
     private  $mpdf;
-    public function __construct( $mpdf)
+    public function __construct( )
     {
-       $this->mpdf = $mpdf;
+        $this->mpdf =new Dompdf();
     }
+   public function Html()
+   {
+        $Html=`
+            <div style="width: 100%; height: 45px; display: flex; justify-content: center; align-items: center;" class="title">
+            <span>Main Menu</span>
+        </div>
+        
+        
+        `;
+        
+    
+        return $Html;
+    }
+
+
     public function print()
     {
-        $this->mpdf->WriteHTML('<h1>Hello world!</h1>');
-        $this->mpdf->Output();
+       $this->mpdf->setPaper('A4', 'portrait');
+        $this->mpdf->loadHtml($this->Html());
+        $this->mpdf->render();
+        $this->mpdf->stream("hello123.pdf", ["Attachment" => false]);
     }
 }
 
 
-$pri=new printHelper();
-$pri->print();
+$pri = new printHelper();
+$pri->print(); 

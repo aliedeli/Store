@@ -61,13 +61,16 @@ trait Role
         $Roles=$Role->fetchAll(PDO::FETCH_ASSOC);
         foreach($Roles as $vlaues)
         {
-
-            if($vlaues['filte']  > 0){
+            if($vlaues['Views'] > 0){
+                if($vlaues['filte']  > 0){
             
-                   $vlaues['childe']=$this->PowerChiles($vlaues['ScrID'],$vlaues['UserID']);
-                
+                    $vlaues['childe']=$this->PowerChiles($vlaues['ScrID'],$vlaues['UserID']);
+                 
+             }
+             array_push( $Screens,$vlaues) ;
             }
-            array_push( $Screens,$vlaues) ;
+
+
 
         }
        
@@ -103,52 +106,7 @@ FROM PowerChiles INNER JOIN childes ON childes.childID=PowerChiles.childID  WHER
         return  $ScreenAlls;
            
      }
-    // public function PowerChiles(){
-    //     $Screens=[];
-        
-    //     $Role=$this->Conn->prepare("SELECT * FROM PowerChiles  Where  UserID=:UserID ");
-    //     $Role->bindParam(':UserID', $this->UesrID);
-    //     $Role->execute();
-    //     $Roles=$Role->fetchAll(PDO::FETCH_ASSOC);
-    //     foreach($Roles as $vlaues)
-    //     {
 
-    //         $this->Views=$vlaues['Views'];
-    //         $this->Updates=$vlaues['Updates'];
-    //         $this->Deletes=$vlaues['Deletes'];
-           
-     
-    //         if($this->Views > 0){
-
-              
-                
-    //             array_push( $Screens,$this->Child($vlaues['Views'],$vlaues['Updates'],$vlaues['Deletes'])) ;
-    //         }
-       
-    //         return $Screens[0];
-       
-
-    //     }
-    // }
-    // public function Child($Views,$Updates,$Deletes){
-    //     $ScreenAll=[];
-    //     $child=$this->Conn->prepare("SELECT * FROM childes where  ScrID=:ScrID ");
-    //     $child->bindParam(':ScrID', $this->ScrID);
-    //     $child->execute();
-    //     $childs=$child->fetchAll(PDO::FETCH_ASSOC);
-    //     foreach( $childs as  $screen)
-    //     {
-    //         $screen['Views']=$Views;
-    //         $screen['Updates']=$Updates;
-    //         $screen['Deletes']=$Deletes;
-        
-    //         array_push($ScreenAll,$screen);
-
-
-    //     }
-    //     return $ScreenAll;
-
-    // }
 
 }
 

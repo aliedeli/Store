@@ -14,6 +14,7 @@
   
 </head>
 <body>
+    <button type="button" id="click">asdasdadadadadda</button>
 <?php
   include_once base_path() . '/views/layouts/nav-top.php';
 ?>
@@ -99,8 +100,22 @@
     
     </div>
     <?php include_once base_path() . '/views/layouts/footer.php';?>
+ <script >
+            document.getElementById('click').addEventListener('click', function() {
+            let xhr=new XMLHttpRequest();
+            xhr.open('POST','/App/pri');
+            xhr.onload=function(){
+                if(xhr.status==200){
+               console.log(xhr.responseText);
+                }
+            }
 
-    <script src="js/all.min.js"></script>   
+            xhr.send(new FormData() );
+        });
+ </script>
+    <script src="js/all.min.js">
+
+    </script>   
     <script src="js/admin/_min.js"></script>   
     <script src="js/home.js"></script>
     
